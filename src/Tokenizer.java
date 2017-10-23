@@ -184,7 +184,7 @@ public class Tokenizer {
                     if (c == '\'') {
                         state = State.SINGLE_QUOTE_END;
                     } else {
-                        throw new LexicalException("Unexpected token: " + c);
+                        throw new LexicalException("Unexpected identifier: " + c);
                     }
                     break;
 
