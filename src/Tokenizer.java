@@ -9,11 +9,16 @@ public class Tokenizer {
         CON,
         CONS,
         CONST,
-        POSSIBLE_LET,
+        L,
+        LE,
+        LET,
         ATTRIB,
         SINGLE_QUOTE_START,
         CHAR,
         SINGLE_QUOTE_END,
+        DOUBLE_QUOTE_START,
+        STRING,
+        DOUBLE_QUOTE_END,
         TERMINATOR,
     }
 
@@ -61,11 +66,13 @@ public class Tokenizer {
                     } else if (c == 'c') {
                         state = State.C;
                     } else if (c == 'l') {
-                        state = State.POSSIBLE_LET;
+                        state = State.L;
                     } else if (c == '=') {
                         state = State.ATTRIB;
                     } else if (c == '\'') {
                         state = State.SINGLE_QUOTE_START;
+                    } else if (c == '"') {
+                        state = State.DOUBLE_QUOTE_START;
                     } else if (c == ';') {
                         state = State.TERMINATOR;
                     } else {
@@ -79,6 +86,7 @@ public class Tokenizer {
                     if (c == 'o') {
                         state = State.CO;
                     } else {
+                        back();
                         state = State.IDENTIFIER;
                     }
                     break;
@@ -86,6 +94,7 @@ public class Tokenizer {
                     if (c == 'n') {
                         state = State.CON;
                     } else {
+                        back();
                         state = State.IDENTIFIER;
                     }
                     break;
@@ -93,6 +102,7 @@ public class Tokenizer {
                     if (c == 's') {
                         state = State.CONS;
                     } else {
+                        back();
                         state = State.IDENTIFIER;
                     }
                     break;
@@ -100,6 +110,7 @@ public class Tokenizer {
                     if (c == 't') {
                         state = State.CONST;
                     } else {
+                        back();
                         state = State.IDENTIFIER;
                     }
                     break;
@@ -108,9 +119,36 @@ public class Tokenizer {
                         state = State.INITIAL;
                         back();
                         return new Token(Token.Type.CREATE_CONST, lexeme);
+                    } else {
+                        state = State.IDENTIFIER;
                     }
+                    break;
+
+                //endregion
+
+                //region let
+
+                case L:
+                    if (c == 'e') {
+                        state = State.LE;
+                    } else {
+                        back();
+                        state = State.IDENTIFIER;
+                    }
+                    break;
+                case LE:
                     if (c == 't') {
-                        state = State.CONST;
+                        state = State.LET;
+                    } else {
+                        back();
+                        state = State.IDENTIFIER;
+                    }
+                    break;
+                case LET:
+                    if (Character.isWhitespace(c)) {
+                        state = State.INITIAL;
+                        back();
+                        return new Token(Token.Type.CREATE_VAR, lexeme);
                     } else {
                         state = State.IDENTIFIER;
                     }
@@ -152,6 +190,27 @@ public class Tokenizer {
                     state = State.INITIAL;
                     back();
                     return new Token(Token.Type.LIT_CHAR, lexeme);
+
+                //endregion
+
+                //region string
+
+                case DOUBLE_QUOTE_START:
+                    state = State.STRING;
+                    break;
+
+                case STRING:
+                    if (c == '"') {
+                        state = State.DOUBLE_QUOTE_END;
+                    } else {
+                        state = State.STRING;
+                    }
+                    break;
+
+                case DOUBLE_QUOTE_END:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.LIT_STRING, lexeme);
 
                 //endregion
 
