@@ -162,4 +162,13 @@ class TokenizerTest {
     }
 
     //endregion
+
+    @Test
+    void testIvalidIdentifier() {
+        final Tokenizer tokenizer = new Tokenizer("$#@");
+
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+    }
 }

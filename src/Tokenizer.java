@@ -75,8 +75,10 @@ public class Tokenizer {
                         state = State.DOUBLE_QUOTE_START;
                     } else if (c == ';') {
                         state = State.TERMINATOR;
-                    } else {
+                    } else if (Character.isLetter(c)) {
                         state = State.IDENTIFIER;
+                    } else {
+                        throw new LexicalException("Invalid identifier: " + c);
                     }
                     break;
 
