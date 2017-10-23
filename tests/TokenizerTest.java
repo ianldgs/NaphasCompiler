@@ -31,7 +31,7 @@ class TokenizerTest {
 
     //endregion
 
-    //region const bogus
+    //region const bogus/incomplete
 
     private final String CODE_CONST_BOGUS = "constt a = 'b';";
 
@@ -51,6 +51,30 @@ class TokenizerTest {
         Tokenizer tokenizer = new Tokenizer(CODE_CONST_BOGUS);
 
         assertEquals("constt", tokenizer.getNextToken().getLexeme());
+        assertEquals("a", tokenizer.getNextToken().getLexeme());
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+        assertEquals("'b'", tokenizer.getNextToken().getLexeme());
+        assertEquals(";", tokenizer.getNextToken().getLexeme());
+    }
+
+    private final String CODE_CONST_INCOMPLETE = "cons a = 'b';";
+
+    @Test
+    void testTokenConstIncomplete() throws Exception {
+        Tokenizer tokenizer = new Tokenizer(CODE_CONST_INCOMPLETE);
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_CHAR, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+    }
+
+    @Test
+    void testLexemeConstIncomplete() throws Exception {
+        Tokenizer tokenizer = new Tokenizer(CODE_CONST_INCOMPLETE);
+
+        assertEquals("cons", tokenizer.getNextToken().getLexeme());
         assertEquals("a", tokenizer.getNextToken().getLexeme());
         assertEquals("=", tokenizer.getNextToken().getLexeme());
         assertEquals("'b'", tokenizer.getNextToken().getLexeme());
@@ -87,9 +111,9 @@ class TokenizerTest {
 
     //endregion
 
-    //region let bogus
+    //region let bogus/incomplete
 
-    private final String CODE_LET_BOGUS = "le name = \"ian luca\";";
+    private final String CODE_LET_BOGUS = "leto name = \"ian luca\";";
 
     @Test
     void testTokenLetBogus() throws Exception {
@@ -105,6 +129,30 @@ class TokenizerTest {
     @Test
     void testLexemeLetBogus() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_LET_BOGUS);
+
+        assertEquals("leto", tokenizer.getNextToken().getLexeme());
+        assertEquals("name", tokenizer.getNextToken().getLexeme());
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+        assertEquals("\"ian luca\"", tokenizer.getNextToken().getLexeme());
+        assertEquals(";", tokenizer.getNextToken().getLexeme());
+    }
+
+    private final String CODE_LET_INCOMPLETE = "le name = \"ian luca\";";
+
+    @Test
+    void testTokenLetIncomplete() throws Exception {
+        Tokenizer tokenizer = new Tokenizer(CODE_LET_INCOMPLETE);
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_STRING, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+    }
+
+    @Test
+    void testLexemeLetIncomplete() throws Exception {
+        Tokenizer tokenizer = new Tokenizer(CODE_LET_INCOMPLETE);
 
         assertEquals("le", tokenizer.getNextToken().getLexeme());
         assertEquals("name", tokenizer.getNextToken().getLexeme());
