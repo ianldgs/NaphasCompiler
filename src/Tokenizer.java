@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Tokenizer {
     private enum State {
         INITIAL,
@@ -37,9 +39,12 @@ public class Tokenizer {
 
     private void back(int n) {
         position -= n;
+        lexeme = lexeme.substring(0, lexeme.length() - n);
     }
 
     public Token getNextToken() throws Exception {
+        lexeme = "";
+
         while (position < code.length()) {
             char c = getNextCharacter();
 
@@ -47,9 +52,13 @@ public class Tokenizer {
             System.out.println(state);
             System.out.println(c);
 
+            lexeme += c;
+
             switch (state) {
                 case INITIAL:
-                    if (c == 'c') {
+                    if (Character.isWhitespace(c)) {
+                        state = State.INITIAL;
+                    } else if (c == 'c') {
                         state = State.C;
                     } else if (c == 'l') {
                         state = State.POSSIBLE_LET;
@@ -59,14 +68,13 @@ public class Tokenizer {
                         state = State.SINGLE_QUOTE_START;
                     } else if (c == ';') {
                         state = State.TERMINATOR;
-                    } else if (Character.isWhitespace(c)) {
-                        state = State.INITIAL;
                     } else {
                         state = State.IDENTIFIER;
                     }
                     break;
 
                 //region const
+
                 case C:
                     if (c == 'o') {
                         state = State.CO;
@@ -99,7 +107,7 @@ public class Tokenizer {
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
                         back();
-                        return Token.CREATE_CONST;
+                        return new Token(Token.Type.CREATE_CONST, lexeme);
                     }
                     if (c == 't') {
                         state = State.CONST;
@@ -114,7 +122,7 @@ public class Tokenizer {
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
                         back();
-                        return Token.IDENTIFIER;
+                        return new Token(Token.Type.IDENTIFIER, lexeme);
                     } else {
                         state = State.IDENTIFIER;
                     }
@@ -124,7 +132,7 @@ public class Tokenizer {
                     //TODO: if =, go to State.equal
                     state = State.INITIAL;
                     back();
-                    return Token.OP_ATTRIB;
+                    return new Token(Token.Type.OP_ATTRIB, lexeme);
 
                 //region char
 
@@ -143,14 +151,14 @@ public class Tokenizer {
                 case SINGLE_QUOTE_END:
                     state = State.INITIAL;
                     back();
-                    return Token.LIT_CHAR;
+                    return new Token(Token.Type.LIT_CHAR, lexeme);
 
                 //endregion
 
                 case TERMINATOR:
                     state = State.INITIAL;
                     back();
-                    return Token.TERMINATOR;
+                    return new Token(Token.Type.TERMINATOR, lexeme);
 
                 default:
                     throw new LexicalException("Invalid identifier: " + c);
