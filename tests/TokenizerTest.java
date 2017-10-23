@@ -164,9 +164,11 @@ class TokenizerTest {
     //endregion
 
     @Test
-    void testIvalidIdentifier() {
-        final Tokenizer tokenizer = new Tokenizer("$#@");
+    void testInvalidIdentifier() {
+        Tokenizer tokenizer = new Tokenizer("$#@'a\"abcd");
 
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
         assertThrows(LexicalException.class, tokenizer::getNextToken);
         assertThrows(LexicalException.class, tokenizer::getNextToken);
         assertThrows(LexicalException.class, tokenizer::getNextToken);
