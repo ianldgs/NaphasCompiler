@@ -281,7 +281,7 @@ class TokenizerTest {
         tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK);
 
         assertEquals("a", tokenizer.getNextToken().getLexeme());
-        assertEquals("b", tokenizer.getNextToken().getLexeme()); //TODO: está retornando //a\nb
+        assertEquals("b", tokenizer.getNextToken().getLexeme());
     }
 
     //endregion

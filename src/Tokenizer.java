@@ -8,9 +8,11 @@ public class Tokenizer {
         CO,
         CON,
         CONS,
+        //TODO: Tabela de símbolos. Onde vai ficar?
         CONST,
         L,
         LE,
+        //TODO: Tabela de símbolos. Onde vai ficar?
         LET,
         ATTRIB,
         ADD,
