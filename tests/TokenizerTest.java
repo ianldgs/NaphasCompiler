@@ -173,4 +173,64 @@ class TokenizerTest {
         assertThrows(LexicalException.class, tokenizer::getNextToken);
         assertThrows(LexicalException.class, tokenizer::getNextToken);
     }
+
+    private final String CODE_OPERATORS = "=+ -*/ %^ += + = -= - = >= > = <= < =";
+
+    @Test
+    void testTokenOperators() throws Exception {
+        Tokenizer tokenizer = new Tokenizer(CODE_OPERATORS);
+
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ADD, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_SUB, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_MULT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_DIV, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_MOD, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_EXP, tokenizer.getNextToken().getType());
+
+        assertEquals(Token.Type.OP_ADD_SET, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ADD, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+
+        assertEquals(Token.Type.OP_SUB_SET, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_SUB, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+
+        assertEquals(Token.Type.OP_GTE, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_GT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+
+        assertEquals(Token.Type.OP_LTE, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_LT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+    }
+
+    @Test
+    void testLexemeOperators() throws Exception {
+        Tokenizer tokenizer = new Tokenizer(CODE_OPERATORS);
+
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+        assertEquals("+", tokenizer.getNextToken().getLexeme());
+        assertEquals("-", tokenizer.getNextToken().getLexeme());
+        assertEquals("*", tokenizer.getNextToken().getLexeme());
+        assertEquals("/", tokenizer.getNextToken().getLexeme());
+        assertEquals("%", tokenizer.getNextToken().getLexeme());
+        assertEquals("^", tokenizer.getNextToken().getLexeme());
+
+        assertEquals("+=", tokenizer.getNextToken().getLexeme());
+        assertEquals("+", tokenizer.getNextToken().getLexeme());
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+
+        assertEquals("-=", tokenizer.getNextToken().getLexeme());
+        assertEquals("-", tokenizer.getNextToken().getLexeme());
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+
+        assertEquals(">=", tokenizer.getNextToken().getLexeme());
+        assertEquals(">", tokenizer.getNextToken().getLexeme());
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+
+        assertEquals("<=", tokenizer.getNextToken().getLexeme());
+        assertEquals("<", tokenizer.getNextToken().getLexeme());
+        assertEquals("=", tokenizer.getNextToken().getLexeme());
+    }
 }

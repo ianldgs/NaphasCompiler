@@ -13,6 +13,18 @@ public class Tokenizer {
         LE,
         LET,
         ATTRIB,
+        ADD,
+        ADD_SET,
+        SUB,
+        SUB_SET,
+        MULT,
+        DIV,
+        MOD,
+        EXP,
+        GT,
+        GTE,
+        LT,
+        LTE,
         SINGLE_QUOTE_START,
         CHAR,
         SINGLE_QUOTE_END,
@@ -60,27 +72,73 @@ public class Tokenizer {
             lexeme += c;
 
             switch (state) {
+                //region initial/identifier
+
                 case INITIAL:
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
-                    } else if (c == 'c') {
+                    }
+                    else if (c == 'c') {
                         state = State.C;
-                    } else if (c == 'l') {
+                    }
+                    else if (c == 'l') {
                         state = State.L;
-                    } else if (c == '=') {
+                    }
+                    else if (c == '=') {
                         state = State.ATTRIB;
-                    } else if (c == '\'') {
+                    }
+                    else if (c == '+') {
+                        state = State.ADD;
+                    }
+                    else if (c == '-') {
+                        state = State.SUB;
+                    }
+                    else if (c == '*') {
+                        state = State.MULT;
+                    }
+                    else if (c == '/') {
+                        state = State.DIV;
+                    }
+                    else if (c == '%') {
+                        state = State.MOD;
+                    }
+                    else if (c == '^') {
+                        state = State.EXP;
+                    }
+                    else if (c == '>') {
+                        state = State.GT;
+                    }
+                    else if (c == '<') {
+                        state = State.LT;
+                    }
+                    else if (c == '\'') {
                         state = State.SINGLE_QUOTE_START;
-                    } else if (c == '"') {
+                    }
+                    else if (c == '"') {
                         state = State.DOUBLE_QUOTE_START;
-                    } else if (c == ';') {
+                    }
+                    else if (c == ';') {
                         state = State.TERMINATOR;
-                    } else if (Character.isLetter(c)) {
+                    }
+                    else if (Character.isLetter(c)) {
                         state = State.IDENTIFIER;
-                    } else {
-                        throw new LexicalException("Invalid identifier: " + c);
+                    }
+                    else {
+                        throw new LexicalException("Unexpected Token: " + c);
                     }
                     break;
+
+                case IDENTIFIER:
+                    if (Character.isWhitespace(c)) {
+                        state = State.INITIAL;
+                        back();
+                        return new Token(Token.Type.IDENTIFIER, lexeme);
+                    } else {
+                        state = State.IDENTIFIER;
+                    }
+                    break;
+
+                //endregion
 
                 //region const
 
@@ -158,22 +216,6 @@ public class Tokenizer {
 
                 //endregion
 
-                case IDENTIFIER:
-                    if (Character.isWhitespace(c)) {
-                        state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.IDENTIFIER, lexeme);
-                    } else {
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-
-                case ATTRIB:
-                    //TODO: if =, go to State.equal
-                    state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_ATTRIB, lexeme);
-
                 //region char
 
                 case SINGLE_QUOTE_START:
@@ -216,13 +258,103 @@ public class Tokenizer {
 
                 //endregion
 
+                //region operators
+
+                case ATTRIB:
+                    //TODO: if =, go to State.EQUAL
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_ATTRIB, lexeme);
+
+                case ADD:
+                    if (c == '=') {
+                        state = State.ADD_SET;
+                    } else {
+                        state = State.INITIAL;
+                        back();
+                        return new Token(Token.Type.OP_ADD, lexeme);
+                    }
+                    break;
+
+                case ADD_SET:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_ADD_SET, lexeme);
+
+                case SUB:
+                    if (c == '=') {
+                        state = State.SUB_SET;
+                    } else {
+                        state = State.INITIAL;
+                        back();
+                        return new Token(Token.Type.OP_SUB, lexeme);
+                    }
+                    break;
+
+                case SUB_SET:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_SUB_SET, lexeme);
+
+                case MULT:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_MULT, lexeme);
+
+                case DIV:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_DIV, lexeme);
+
+                case MOD:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_MOD, lexeme);
+
+                case EXP:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_EXP, lexeme);
+
+                case GT:
+                    if (c == '=') {
+                        state = State.GTE;
+                    } else {
+                        state = State.INITIAL;
+                        back();
+                        return new Token(Token.Type.OP_GT, lexeme);
+                    }
+                    break;
+
+                case GTE:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_GTE, lexeme);
+
+                case LT:
+                    if (c == '=') {
+                        state = State.LTE;
+                    } else {
+                        state = State.INITIAL;
+                        back();
+                        return new Token(Token.Type.OP_LT, lexeme);
+                    }
+                    break;
+
+                case LTE:
+                    state = State.INITIAL;
+                    back();
+                    return new Token(Token.Type.OP_LTE, lexeme);
+
                 case TERMINATOR:
                     state = State.INITIAL;
                     back();
                     return new Token(Token.Type.TERMINATOR, lexeme);
 
+                //endregion
+
                 default:
-                    throw new LexicalException("Invalid identifier: " + c);
+                    throw new LexicalException("Unexpected Token: " + c);
             }
         }
 
