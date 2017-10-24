@@ -32,6 +32,7 @@ public class Tokenizer {
         STRING,
         DOUBLE_QUOTE_END,
         TERMINATOR,
+        SINGLE_LINE_COMMENT,
     }
 
     private String code;
@@ -57,6 +58,11 @@ public class Tokenizer {
     private void back(int n) {
         position -= n;
         lexeme = lexeme.substring(0, lexeme.length() - n);
+    }
+
+    private Token buildTokenAndRollBack(Token.Type type) {
+        back();
+        return new Token(type, lexeme);
     }
 
     public Token getNextToken() throws Exception {
@@ -124,15 +130,14 @@ public class Tokenizer {
                         state = State.IDENTIFIER;
                     }
                     else {
-                        throw new LexicalException("Unexpected Token: " + c);
+                        throw new LexicalException("Unexpected: " + c);
                     }
                     break;
 
                 case IDENTIFIER:
-                    if (Character.isWhitespace(c)) {
+                    if (!Character.isLetterOrDigit(c)) {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.IDENTIFIER, lexeme);
+                        return buildTokenAndRollBack(Token.Type.IDENTIFIER);
                     } else {
                         state = State.IDENTIFIER;
                     }
@@ -177,8 +182,7 @@ public class Tokenizer {
                 case CONST:
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.CREATE_CONST, lexeme);
+                        return buildTokenAndRollBack(Token.Type.CREATE_CONST);
                     } else {
                         state = State.IDENTIFIER;
                     }
@@ -207,8 +211,7 @@ public class Tokenizer {
                 case LET:
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.CREATE_VAR, lexeme);
+                        return buildTokenAndRollBack(Token.Type.CREATE_VAR);
                     } else {
                         state = State.IDENTIFIER;
                     }
@@ -226,14 +229,13 @@ public class Tokenizer {
                     if (c == '\'') {
                         state = State.SINGLE_QUOTE_END;
                     } else {
-                        throw new LexicalException("Unexpected identifier: " + c);
+                        throw new LexicalException("Unexpected: " + c);
                     }
                     break;
 
                 case SINGLE_QUOTE_END:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.LIT_CHAR, lexeme);
+                    return buildTokenAndRollBack(Token.Type.LIT_CHAR);
 
                 //endregion
 
@@ -253,8 +255,7 @@ public class Tokenizer {
 
                 case DOUBLE_QUOTE_END:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.LIT_STRING, lexeme);
+                    return buildTokenAndRollBack(Token.Type.LIT_STRING);
 
                 //endregion
 
@@ -263,98 +264,102 @@ public class Tokenizer {
                 case ATTRIB:
                     //TODO: if =, go to State.EQUAL
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_ATTRIB, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_ATTRIB);
 
                 case ADD:
                     if (c == '=') {
                         state = State.ADD_SET;
                     } else {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.OP_ADD, lexeme);
+                        return buildTokenAndRollBack(Token.Type.OP_ADD);
                     }
                     break;
 
                 case ADD_SET:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_ADD_SET, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_ADD_SET);
 
                 case SUB:
                     if (c == '=') {
                         state = State.SUB_SET;
                     } else {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.OP_SUB, lexeme);
+                        return buildTokenAndRollBack(Token.Type.OP_SUB);
                     }
                     break;
 
                 case SUB_SET:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_SUB_SET, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_SUB_SET);
 
                 case MULT:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_MULT, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_MULT);
 
                 case DIV:
-                    state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_DIV, lexeme);
+                    if (c == '/') {
+                        state = State.SINGLE_LINE_COMMENT;
+                    } else {
+                        state = State.INITIAL;
+                        return buildTokenAndRollBack(Token.Type.OP_DIV);
+                    }
+                    break;
 
                 case MOD:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_MOD, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_MOD);
 
                 case EXP:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_EXP, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_EXP);
 
                 case GT:
                     if (c == '=') {
                         state = State.GTE;
                     } else {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.OP_GT, lexeme);
+                        return buildTokenAndRollBack(Token.Type.OP_GT);
                     }
                     break;
 
                 case GTE:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_GTE, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_GTE);
 
                 case LT:
                     if (c == '=') {
                         state = State.LTE;
                     } else {
                         state = State.INITIAL;
-                        back();
-                        return new Token(Token.Type.OP_LT, lexeme);
+                        return buildTokenAndRollBack(Token.Type.OP_LT);
                     }
                     break;
 
                 case LTE:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.OP_LTE, lexeme);
+                    return buildTokenAndRollBack(Token.Type.OP_LTE);
 
                 case TERMINATOR:
                     state = State.INITIAL;
-                    back();
-                    return new Token(Token.Type.TERMINATOR, lexeme);
+                    return buildTokenAndRollBack(Token.Type.TERMINATOR);
+
+                //endregion
+
+                //region comments
+
+                case SINGLE_LINE_COMMENT:
+                    if (c == '\n') {
+                        state = State.INITIAL;
+                        lexeme = "";
+                    } else {
+                        state = State.SINGLE_LINE_COMMENT;
+                    }
+                    break;
 
                 //endregion
 
                 default:
-                    throw new LexicalException("Unexpected Token: " + c);
+                    throw new LexicalException("Unexpected: " + c);
             }
         }
 

@@ -46,13 +46,6 @@ public class Token {
         FOR,
         WHILE,
         DO,
-        //TODO: ver se vai precisar disso, ou se vai simplesmente voltar pro estado inicial quando tiver comentário
-        START_COMMENT,
-        START_BLOCK_COMMENT,
-        END_BLOCK_COMMENT,
-        //TODO: é realmente Token? ou vai ser um ID já cadastrado na tabela de símbolos?
-        OP_INPUT,
-        OP_OUTPUT,
     }
 
     private Type type;

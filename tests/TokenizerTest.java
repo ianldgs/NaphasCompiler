@@ -3,6 +3,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TokenizerTest {
+    @Test
+    void testInvalidStuff() {
+        Tokenizer tokenizer = new Tokenizer("$#@'a\"abcd");
+
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+    }
+
     //region const attrib
 
     private final String CODE_CONST_ATTRIB = "const a = 'b';";
@@ -163,16 +174,7 @@ class TokenizerTest {
 
     //endregion
 
-    @Test
-    void testInvalidIdentifier() {
-        Tokenizer tokenizer = new Tokenizer("$#@'a\"abcd");
-
-        assertThrows(LexicalException.class, tokenizer::getNextToken);
-        assertThrows(LexicalException.class, tokenizer::getNextToken);
-        assertThrows(LexicalException.class, tokenizer::getNextToken);
-        assertThrows(LexicalException.class, tokenizer::getNextToken);
-        assertThrows(LexicalException.class, tokenizer::getNextToken);
-    }
+    //region operators
 
     private final String CODE_OPERATORS = "=+ -*/ %^ += + = -= - = >= > = <= < =";
 
@@ -233,4 +235,54 @@ class TokenizerTest {
         assertEquals("<", tokenizer.getNextToken().getLexeme());
         assertEquals("=", tokenizer.getNextToken().getLexeme());
     }
+
+    @Test
+    void testIdentifierAndOperatorsTogether() throws Exception {
+        Tokenizer tokenizer = new Tokenizer("a=a+a");
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.OP_ADD, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+    }
+
+    //endregion
+
+    //region comments
+
+    private final String SINGLE_LINE_COMMENT_CODE = "a//a";
+    private final String SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK = "a//a\nb";
+
+    @Test
+    void testTokenComments() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE);
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertNull(tokenizer.getNextToken());
+
+        tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK);
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+    }
+
+    @Test
+    void testLexemeComments() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE);
+
+        assertEquals("a", tokenizer.getNextToken().getLexeme());
+        assertNull(tokenizer.getNextToken());
+
+        tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK);
+
+        assertEquals("a", tokenizer.getNextToken().getLexeme());
+        assertEquals("b", tokenizer.getNextToken().getLexeme()); //TODO: está retornando //a\nb
+    }
+
+    //endregion
 }
