@@ -5,16 +5,6 @@ public class Tokenizer {
     private enum State {
         INITIAL,
         IDENTIFIER,
-        C,
-        CO,
-        CON,
-        CONS,
-        //TODO: Tabela de símbolos. Onde vai ficar?
-        CONST,
-        L,
-        LE,
-        //TODO: Tabela de símbolos. Onde vai ficar?
-        LET,
         ATTRIB,
         ADD,
         ADD_SET,
@@ -69,6 +59,10 @@ public class Tokenizer {
         symbols.put(++lastId, new Token(Token.Type.TYPE_CHAR, "char"));
         symbols.put(++lastId, new Token(Token.Type.TYPE_FLOAT, "float"));
         symbols.put(++lastId, new Token(Token.Type.TYPE_STRING, "string"));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_BOOLEAN, "boolean"));
+        symbols.put(++lastId, new Token(Token.Type.LIT_BOOLEAN_TRUE, "true"));
+        symbols.put(++lastId, new Token(Token.Type.LIT_BOOLEAN_FALSE, "false"));
+        symbols.put(++lastId, new Token(Token.Type.LIT_NULL, "null"));
     }
 
     private char getNextCharacter() {
