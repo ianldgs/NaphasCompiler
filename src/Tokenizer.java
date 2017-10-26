@@ -28,11 +28,14 @@ public class Tokenizer {
         END_EXP,
         START_BLOCK,
         END_BLOCK,
+        PIPE,
         OR,
+        AMPERSTAND,
         AND,
         EQUAL,
-        DIFF,
+        IDENTICAL,
         NOT,
+        DIFF,
         SINGLE_QUOTE_START,
         CHAR,
         SINGLE_QUOTE_END,
@@ -188,6 +191,15 @@ public class Tokenizer {
                     }
                     else if (c == '}') {
                         state = State.END_BLOCK;
+                    }
+                    else if (c == '|') {
+                        state = State.PIPE;
+                    }
+                    else if (c == '&') {
+                        state = State.AMPERSTAND;
+                    }
+                    else if (c == '!') {
+                        state = State.NOT;
                     }
                     else if (c == ';') {
                         state = State.TERMINATOR;
@@ -379,6 +391,10 @@ public class Tokenizer {
                     state = State.INITIAL;
                     return buildTokenAndRollBack(Token.Type.OP_LTE);
 
+                //endregion
+
+                //region start end
+
                 case START_ARRAY:
                     state = State.INITIAL;
                     return buildTokenAndRollBack(Token.Type.START_ARRAY);
@@ -410,6 +426,40 @@ public class Tokenizer {
                 case TERMINATOR:
                     state = State.INITIAL;
                     return buildTokenAndRollBack(Token.Type.TERMINATOR);
+
+                //endregion
+
+                //region logical operators
+
+                case PIPE:
+                    if (c == '|') {
+                        state = State.OR;
+                    } else {
+                        state = State.INITIAL;
+                        throw new LexicalException("Unexpected: " + c);
+                    }
+                    break;
+
+                case OR:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.OP_OR);
+
+                case AMPERSTAND:
+                    if (c == '&') {
+                        state = State.AND;
+                    } else {
+                        state = State.INITIAL;
+                        throw new LexicalException("Unexpected: " + c);
+                    }
+                    break;
+
+                case AND:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.OP_AND);
+
+                case NOT:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.OP_NOT);
 
                 //endregion
 
