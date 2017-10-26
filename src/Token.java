@@ -8,8 +8,8 @@ public class Token {
         LIT_BOOLEAN_TRUE,
         LIT_BOOLEAN_FALSE,
         TYPE_INT,
-        TYPE_FLOAT,
         TYPE_CHAR,
+        TYPE_FLOAT,
         TYPE_STRING,
         START_ARRAY,
         END_ARRAY,
@@ -59,6 +59,8 @@ public class Token {
     public String getLexeme() {
         return lexeme;
     }
+
+    public Token() { }
 
     public Token(Type type) {
         this.type = type;

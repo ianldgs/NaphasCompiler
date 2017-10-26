@@ -52,19 +52,19 @@ public class Tokenizer {
     public Tokenizer(String code) {
         this.code = code + "$";
 
-        symbols.put(++lastId, new Token(Token.Type.IF));
-        symbols.put(++lastId, new Token(Token.Type.ELSE));
-        symbols.put(++lastId, new Token(Token.Type.SWITCH));
-        symbols.put(++lastId, new Token(Token.Type.CASE));
-        symbols.put(++lastId, new Token(Token.Type.FOR));
-        symbols.put(++lastId, new Token(Token.Type.WHILE));
-        symbols.put(++lastId, new Token(Token.Type.DO));
-        symbols.put(++lastId, new Token(Token.Type.CREATE_CONST));
-        symbols.put(++lastId, new Token(Token.Type.CREATE_VAR));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_CHAR));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_FLOAT));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_INT));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_STRING));
+        symbols.put(++lastId, new Token(Token.Type.IF, "if"));
+        symbols.put(++lastId, new Token(Token.Type.ELSE, "else"));
+        symbols.put(++lastId, new Token(Token.Type.SWITCH, "switch"));
+        symbols.put(++lastId, new Token(Token.Type.CASE, "case"));
+        symbols.put(++lastId, new Token(Token.Type.FOR, "for"));
+        symbols.put(++lastId, new Token(Token.Type.WHILE, "while"));
+        symbols.put(++lastId, new Token(Token.Type.DO, "do"));
+        symbols.put(++lastId, new Token(Token.Type.CREATE_CONST, "const"));
+        symbols.put(++lastId, new Token(Token.Type.CREATE_VAR, "let"));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_INT, "int"));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_CHAR, "char"));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_FLOAT, "float"));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_STRING, "string"));
     }
 
     private char getNextCharacter() {
@@ -81,16 +81,24 @@ public class Tokenizer {
     }
 
     private Token buildTokenAndRollBack(Token.Type type) {
-        for (Map.Entry<Integer, Token> entry : symbols.entrySet()) {
-            Integer key = entry.getKey();
-            Token value = entry.getValue();
+        back();
+        Token token = new Token(type, lexeme);
 
-            //TODO: ver se existe o lexema
+        if (type == Token.Type.IDENTIFIER) {
+            for (Map.Entry<Integer, Token> entry : symbols.entrySet()) {
+                //Integer id = entry.getKey();
+                Token _token = entry.getValue();
+
+                if (token.getLexeme().equals(_token.getLexeme())) {
+                    token = new Token(_token.getType(), lexeme);
+                    break;
+                }
+            }
         }
 
-        back();
+        symbols.put(++lastId, token);
 
-        return new Token(type, lexeme);
+        return token;
     }
 
     public Token getNextToken() throws Exception {
@@ -111,12 +119,6 @@ public class Tokenizer {
                 case INITIAL:
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
-                    }
-                    else if (c == 'c') {
-                        state = State.C;
-                    }
-                    else if (c == 'l') {
-                        state = State.L;
                     }
                     else if (c == '=') {
                         state = State.ATTRIB;
@@ -166,80 +168,6 @@ public class Tokenizer {
                     if (!Character.isLetterOrDigit(c)) {
                         state = State.INITIAL;
                         return buildTokenAndRollBack(Token.Type.IDENTIFIER);
-                    } else {
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-
-                //endregion
-
-                //region const
-
-                case C:
-                    if (c == 'o') {
-                        state = State.CO;
-                    } else {
-                        back();
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-                case CO:
-                    if (c == 'n') {
-                        state = State.CON;
-                    } else {
-                        back();
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-                case CON:
-                    if (c == 's') {
-                        state = State.CONS;
-                    } else {
-                        back();
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-                case CONS:
-                    if (c == 't') {
-                        state = State.CONST;
-                    } else {
-                        back();
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-                case CONST:
-                    if (Character.isWhitespace(c)) {
-                        state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.CREATE_CONST);
-                    } else {
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-
-                //endregion
-
-                //region let
-
-                case L:
-                    if (c == 'e') {
-                        state = State.LE;
-                    } else {
-                        back();
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-                case LE:
-                    if (c == 't') {
-                        state = State.LET;
-                    } else {
-                        back();
-                        state = State.IDENTIFIER;
-                    }
-                    break;
-                case LET:
-                    if (Character.isWhitespace(c)) {
-                        state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.CREATE_VAR);
                     } else {
                         state = State.IDENTIFIER;
                     }
