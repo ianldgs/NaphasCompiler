@@ -318,4 +318,45 @@ class TokenizerTest {
     }
 
     //endregion
+
+    //region int
+
+    private final String INT_CODE = "1 200 300 999999";
+    private final String INT_INVALID_CODE = "1a a1";
+
+    @Test
+    void testTokenInt() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(INT_CODE);
+
+        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
+
+        tokenizer = new Tokenizer(INT_INVALID_CODE);
+
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+    }
+
+    @Test
+    void testLexemeInt() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(INT_CODE);
+
+        assertEquals("1", tokenizer.getNextToken().getLexeme());
+        assertEquals("200", tokenizer.getNextToken().getLexeme());
+        assertEquals("300", tokenizer.getNextToken().getLexeme());
+        assertEquals("999999", tokenizer.getNextToken().getLexeme());
+
+        tokenizer = new Tokenizer(INT_INVALID_CODE);
+
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertEquals("a1", tokenizer.getNextToken().getLexeme());
+    }
+
+    //endregion
 }

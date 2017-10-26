@@ -18,6 +18,20 @@ public class Tokenizer {
         GTE,
         LT,
         LTE,
+        INT,
+        FLOAT,
+        START_ARRAY,
+        END_ARRAY,
+        SEPARATOR,
+        START_EXP,
+        END_EXP,
+        START_BLOCK,
+        END_BLOCK,
+        OR,
+        AND,
+        EQUAL,
+        DIFF,
+        NOT,
         SINGLE_QUOTE_START,
         CHAR,
         SINGLE_QUOTE_END,
@@ -32,6 +46,8 @@ public class Tokenizer {
         MULTI_LINE_END_COMMENT2,
     }
 
+    private final char END_CODE = '$';
+
     private int lastId = 0;
     private HashMap<Integer, Token> symbols = new HashMap<Integer, Token>();
 
@@ -44,7 +60,7 @@ public class Tokenizer {
     private String lexeme;
 
     public Tokenizer(String code) {
-        this.code = code + "$";
+        this.code = code + END_CODE;
 
         symbols.put(++lastId, new Token(Token.Type.IF, "if"));
         symbols.put(++lastId, new Token(Token.Type.ELSE, "else"));
@@ -157,7 +173,11 @@ public class Tokenizer {
                     else if (Character.isLetter(c)) {
                         state = State.IDENTIFIER;
                     }
+                    else if (Character.isDigit(c)) {
+                        state = State.INT;
+                    }
                     else {
+                        state = State.INITIAL;
                         throw new LexicalException("Unexpected: " + c);
                     }
                     break;
@@ -168,6 +188,22 @@ public class Tokenizer {
                         return buildTokenAndRollBack(Token.Type.IDENTIFIER);
                     } else {
                         state = State.IDENTIFIER;
+                    }
+                    break;
+
+                //endregion
+
+                //region int
+
+                case INT:
+                    if (Character.isDigit(c)) {
+                        state = State.INT;
+                    } else if (Character.isWhitespace(c) || c == END_CODE) {
+                        state = State.INITIAL;
+                        return buildTokenAndRollBack(Token.Type.LIT_INT);
+                    } else {
+                        state = State.INITIAL;
+                        throw new LexicalException("Unexpected: " + c);
                     }
                     break;
 
