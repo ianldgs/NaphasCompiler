@@ -359,4 +359,43 @@ class TokenizerTest {
     }
 
     //endregion
+
+    //region float
+
+    private final String FLOAT_CODE = "1.1 200.50 30.0 9.99999";
+    private final String FLOAT_INVALID_CODE = "1.";
+
+    @Test
+    void testTokenFloat() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(FLOAT_CODE);
+
+        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+
+        tokenizer = new Tokenizer(FLOAT_INVALID_CODE);
+
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+    }
+
+    @Test
+    void testLexemeFloat() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(FLOAT_CODE);
+
+        assertEquals("1.1", tokenizer.getNextToken().getLexeme());
+        assertEquals("200.50", tokenizer.getNextToken().getLexeme());
+        assertEquals("30.0", tokenizer.getNextToken().getLexeme());
+        assertEquals("9.99999", tokenizer.getNextToken().getLexeme());
+
+        tokenizer = new Tokenizer(FLOAT_INVALID_CODE);
+
+        assertThrows(LexicalException.class, tokenizer::getNextToken);
+    }
+
+    //endregion
 }

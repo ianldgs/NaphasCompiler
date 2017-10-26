@@ -19,6 +19,7 @@ public class Tokenizer {
         LT,
         LTE,
         INT,
+        INT_DOT,
         FLOAT,
         START_ARRAY,
         END_ARRAY,
@@ -201,6 +202,32 @@ public class Tokenizer {
                     } else if (Character.isWhitespace(c) || c == END_CODE) {
                         state = State.INITIAL;
                         return buildTokenAndRollBack(Token.Type.LIT_INT);
+                    } else if (c == '.') {
+                        state = State.INT_DOT;
+                    } else {
+                        state = State.INITIAL;
+                        throw new LexicalException("Unexpected: " + c);
+                    }
+                    break;
+
+                //endregion
+
+                //region float
+
+                case INT_DOT:
+                    if (Character.isDigit(c)) {
+                        state = State.FLOAT;
+                    } else {
+                        throw new LexicalException("Unexpected end of LIT_FLOAT");
+                    }
+                    break;
+
+                case FLOAT:
+                    if (Character.isDigit(c)) {
+                        state = State.FLOAT;
+                    } else if (Character.isWhitespace(c) || c == END_CODE) {
+                        state = State.INITIAL;
+                        return buildTokenAndRollBack(Token.Type.LIT_FLOAT);
                     } else {
                         state = State.INITIAL;
                         throw new LexicalException("Unexpected: " + c);
