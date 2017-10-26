@@ -35,6 +35,7 @@ public class Tokenizer {
         EQUAL,
         IDENTICAL,
         NOT,
+        NOT_EQUAL,
         DIFF,
         SINGLE_QUOTE_START,
         CHAR,
@@ -312,9 +313,13 @@ public class Tokenizer {
                 //region operators
 
                 case ATTRIB:
-                    //TODO: if =, go to State.EQUAL
-                    state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_ATTRIB);
+                    if (c == '=') {
+                        state = State.EQUAL;
+                    } else {
+                        state = State.INITIAL;
+                        return buildTokenAndRollBack(Token.Type.OP_ATTRIB);
+                    }
+                    break;
 
                 case ADD:
                     if (c == '=') {
@@ -458,8 +463,38 @@ public class Tokenizer {
                     return buildTokenAndRollBack(Token.Type.OP_AND);
 
                 case NOT:
+                    if (c == '=') {
+                        state = State.NOT_EQUAL;
+                    } else {
+                        state = State.INITIAL;
+                        return buildTokenAndRollBack(Token.Type.OP_NOT);
+                    }
+                    break;
+
+                case NOT_EQUAL:
+                    if (c == '=') {
+                        state = State.DIFF;
+                    } else {
+                        state = State.INITIAL;
+                        throw new LexicalException("Unexpected: " + c);
+                    }
+                    break;
+
+                case DIFF:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_NOT);
+                    return buildTokenAndRollBack(Token.Type.OP_DIFF);
+
+                case EQUAL:
+                    if (c == '=') {
+                        state = State.IDENTICAL;
+                    } else {
+                        throw new LexicalException("Unexpected: " + c);
+                    }
+                    break;
+
+                case IDENTICAL:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.OP_EQUAL);
 
                 //endregion
 
