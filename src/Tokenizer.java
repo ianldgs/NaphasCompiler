@@ -69,23 +69,23 @@ public class Tokenizer {
     public Tokenizer(String code) {
         this.code = code + END_CODE;
 
-        symbols.put(++lastId, new Token(Token.Type.IF, "if"));
-        symbols.put(++lastId, new Token(Token.Type.ELSE, "else"));
-        symbols.put(++lastId, new Token(Token.Type.SWITCH, "switch"));
-        symbols.put(++lastId, new Token(Token.Type.CASE, "case"));
-        symbols.put(++lastId, new Token(Token.Type.FOR, "for"));
-        symbols.put(++lastId, new Token(Token.Type.WHILE, "while"));
-        symbols.put(++lastId, new Token(Token.Type.DO, "do"));
-        symbols.put(++lastId, new Token(Token.Type.CREATE_CONST, "const"));
-        symbols.put(++lastId, new Token(Token.Type.CREATE_VAR, "let"));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_INT, "int"));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_CHAR, "char"));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_FLOAT, "float"));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_STRING, "string"));
-        symbols.put(++lastId, new Token(Token.Type.TYPE_BOOLEAN, "boolean"));
-        symbols.put(++lastId, new Token(Token.Type.LIT_BOOLEAN_TRUE, "true"));
-        symbols.put(++lastId, new Token(Token.Type.LIT_BOOLEAN_FALSE, "false"));
-        symbols.put(++lastId, new Token(Token.Type.LIT_NULL, "null"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.IF, "if"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.ELSE, "else"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.SWITCH, "switch"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.CASE, "case"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.FOR, "for"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.WHILE, "while"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.DO, "do"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.CREATE_CONST, "const"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.CREATE_VAR, "let"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_INT, "int"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_CHAR, "char"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_FLOAT, "float"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_STRING, "string"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_BOOLEAN, "boolean"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.LIT_BOOLEAN_TRUE, "true"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.LIT_BOOLEAN_FALSE, "false"));
+        symbols.put(++lastId, new Token(lastId, Token.Type.LIT_NULL, "null"));
     }
 
     private char getNextCharacter() {
@@ -109,7 +109,10 @@ public class Tokenizer {
     private Token buildTokenAndRollBack(Token.Type type) {
         state = State.INITIAL;
         back();
-        Token token = new Token(type, lexeme);
+
+        int currentId = ++lastId;
+
+        Token token = new Token(currentId, type, lexeme);
 
         if (type == Token.Type.IDENTIFIER) {
             for (Map.Entry<Integer, Token> entry : symbols.entrySet()) {
@@ -117,13 +120,13 @@ public class Tokenizer {
                 Token _token = entry.getValue();
 
                 if (token.getLexeme().equals(_token.getLexeme())) {
-                    token = new Token(_token.getType(), lexeme);
+                    token = new Token(currentId, _token.getType(), lexeme);
                     break;
                 }
             }
         }
 
-        symbols.put(++lastId, token);
+        symbols.put(currentId, token);
 
         return token;
     }
@@ -226,7 +229,9 @@ public class Tokenizer {
                         state = State.INT;
                     }
                     else {
-                        error("Unexpected: " + c);
+                        if (position < code.length()) {
+                            error("Unexpected: " + c);
+                        }
                     }
                     break;
 

@@ -12,6 +12,7 @@ class TokenizerTest {
         assertThrows(LexicalException.class, tokenizer::getNextToken);
         assertThrows(LexicalException.class, tokenizer::getNextToken);
         assertThrows(LexicalException.class, tokenizer::getNextToken);
+        assertNull(tokenizer.getNextToken());
     }
 
     //region const attrib
@@ -27,6 +28,7 @@ class TokenizerTest {
         assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
         assertEquals(Token.Type.LIT_CHAR, tokenizer.getNextToken().getType());
         assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertNull(tokenizer.getNextToken());
     }
 
     @Test
