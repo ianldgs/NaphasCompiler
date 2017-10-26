@@ -61,6 +61,8 @@ public class Tokenizer {
     private State state = State.INITIAL;
 
     private int position = 0;
+    private int line = 1;
+    private int column = 1;
 
     private String lexeme;
 
@@ -99,7 +101,13 @@ public class Tokenizer {
         lexeme = lexeme.substring(0, lexeme.length() - n);
     }
 
+    private void error(String message) throws LexicalException {
+        state = State.INITIAL;
+        throw new LexicalException(message + ". Near line " + line + " and column " + column);
+    }
+
     private Token buildTokenAndRollBack(Token.Type type) {
+        state = State.INITIAL;
         back();
         Token token = new Token(type, lexeme);
 
@@ -120,11 +128,17 @@ public class Tokenizer {
         return token;
     }
 
-    public Token getNextToken() throws Exception {
+    public Token getNextToken() throws LexicalException {
         lexeme = "";
 
         while (position < code.length()) {
             char c = getNextCharacter();
+
+            column++;
+            if (c == '\n') {
+                line++;
+                column = 1;
+            }
 
             System.out.println("---------");
             System.out.println(state);
@@ -212,8 +226,7 @@ public class Tokenizer {
                         state = State.INT;
                     }
                     else {
-                        state = State.INITIAL;
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -239,8 +252,7 @@ public class Tokenizer {
                     } else if (c == '.') {
                         state = State.INT_DOT;
                     } else {
-                        state = State.INITIAL;
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -252,7 +264,7 @@ public class Tokenizer {
                     if (Character.isDigit(c)) {
                         state = State.FLOAT;
                     } else {
-                        throw new LexicalException("Unexpected end of LIT_FLOAT");
+                        error("Unexpected end of LIT_FLOAT");
                     }
                     break;
 
@@ -263,8 +275,7 @@ public class Tokenizer {
                         state = State.INITIAL;
                         return buildTokenAndRollBack(Token.Type.LIT_FLOAT);
                     } else {
-                        state = State.INITIAL;
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -280,7 +291,8 @@ public class Tokenizer {
                     if (c == '\'') {
                         state = State.SINGLE_QUOTE_END;
                     } else {
-                        throw new LexicalException("Unexpected: " + c);
+                        back();
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -299,6 +311,8 @@ public class Tokenizer {
                 case STRING:
                     if (c == '"') {
                         state = State.DOUBLE_QUOTE_END;
+                    } else if (c == END_CODE) {
+                        error("Unexpected end of LIT_STRING");
                     } else {
                         state = State.STRING;
                     }
@@ -398,7 +412,7 @@ public class Tokenizer {
 
                 //endregion
 
-                //region start end
+                //region start/end
 
                 case START_ARRAY:
                     state = State.INITIAL;
@@ -440,8 +454,7 @@ public class Tokenizer {
                     if (c == '|') {
                         state = State.OR;
                     } else {
-                        state = State.INITIAL;
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -453,8 +466,7 @@ public class Tokenizer {
                     if (c == '&') {
                         state = State.AND;
                     } else {
-                        state = State.INITIAL;
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -475,8 +487,7 @@ public class Tokenizer {
                     if (c == '=') {
                         state = State.DIFF;
                     } else {
-                        state = State.INITIAL;
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -488,7 +499,7 @@ public class Tokenizer {
                     if (c == '=') {
                         state = State.IDENTICAL;
                     } else {
-                        throw new LexicalException("Unexpected: " + c);
+                        error("Unexpected: " + c);
                     }
                     break;
 
@@ -542,7 +553,7 @@ public class Tokenizer {
                 //endregion
 
                 default:
-                    throw new LexicalException("Unexpected: " + c);
+                    error("Unexpected: " + c);
             }
         }
 

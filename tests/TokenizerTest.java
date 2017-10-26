@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TokenizerTest {
     @Test
-    void testInvalidStuff() {
+    void testInvalidStuff() throws Exception {
         Tokenizer tokenizer = new Tokenizer("$#@'a\"abcd");
 
         assertThrows(LexicalException.class, tokenizer::getNextToken);
