@@ -255,7 +255,7 @@ class TokenizerTest {
     private final String SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK = "a//a\nb";
 
     @Test
-    void testTokenComments() throws Exception {
+    void testTokenSingleLineComments() throws Exception {
         Tokenizer tokenizer;
 
         tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE);
@@ -270,7 +270,7 @@ class TokenizerTest {
     }
 
     @Test
-    void testLexemeComments() throws Exception {
+    void testLexemeSingleLineComments() throws Exception {
         Tokenizer tokenizer;
 
         tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE);
@@ -279,6 +279,39 @@ class TokenizerTest {
         assertNull(tokenizer.getNextToken());
 
         tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK);
+
+        assertEquals("a", tokenizer.getNextToken().getLexeme());
+        assertEquals("b", tokenizer.getNextToken().getLexeme());
+    }
+
+    private final String MULTI_LINE_COMMENT_CODE = "a/**/a";
+    private final String MULTI_LINE_COMMENT_CODE_WITH_TEXT = "a/*a*/b";
+
+    @Test
+    void testTokenMultiLineComments() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(MULTI_LINE_COMMENT_CODE);
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+
+        tokenizer = new Tokenizer(MULTI_LINE_COMMENT_CODE_WITH_TEXT);
+
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+    }
+
+    @Test
+    void testLexemeMultiLineComments() throws Exception {
+        Tokenizer tokenizer;
+
+        tokenizer = new Tokenizer(MULTI_LINE_COMMENT_CODE);
+
+        assertEquals("a", tokenizer.getNextToken().getLexeme());
+        assertEquals("a", tokenizer.getNextToken().getLexeme());
+
+        tokenizer = new Tokenizer(MULTI_LINE_COMMENT_CODE_WITH_TEXT);
 
         assertEquals("a", tokenizer.getNextToken().getLexeme());
         assertEquals("b", tokenizer.getNextToken().getLexeme());

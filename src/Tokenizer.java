@@ -36,6 +36,10 @@ public class Tokenizer {
         DOUBLE_QUOTE_END,
         TERMINATOR,
         SINGLE_LINE_COMMENT,
+        MULTI_LINE_START_COMMENT,
+        MULTI_LINE_COMMENT,
+        MULTI_LINE_END_COMMENT1,
+        MULTI_LINE_END_COMMENT2,
     }
 
     private int lastId = 0;
@@ -255,6 +259,8 @@ public class Tokenizer {
                 case DIV:
                     if (c == '/') {
                         state = State.SINGLE_LINE_COMMENT;
+                    } else if (c == '*') {
+                        state = State.MULTI_LINE_START_COMMENT;
                     } else {
                         state = State.INITIAL;
                         return buildTokenAndRollBack(Token.Type.OP_DIV);
@@ -310,6 +316,36 @@ public class Tokenizer {
                     } else {
                         state = State.SINGLE_LINE_COMMENT;
                     }
+                    break;
+
+                case MULTI_LINE_START_COMMENT:
+                    if (c == '*') {
+                        state = State.MULTI_LINE_END_COMMENT1;
+                    } else {
+                        state = State.MULTI_LINE_COMMENT;
+                    }
+                    break;
+
+                case MULTI_LINE_COMMENT:
+                    if (c == '*') {
+                        state = State.MULTI_LINE_END_COMMENT1;
+                    } else {
+                        state = State.MULTI_LINE_COMMENT;
+                    }
+                    break;
+
+                case MULTI_LINE_END_COMMENT1:
+                    if (c == '/') {
+                        state = State.MULTI_LINE_END_COMMENT2;
+                    } else {
+                        state = State.SINGLE_LINE_COMMENT;
+                    }
+                    break;
+
+                case MULTI_LINE_END_COMMENT2:
+                    state = State.INITIAL;
+                    back();
+                    lexeme = "";
                     break;
 
                 //endregion
