@@ -176,7 +176,7 @@ class TokenizerTest {
 
     //region operators
 
-    private final String CODE_OPERATORS = "=+ -*/ %^ += + = -= - = >= > = <= < =";
+    private final String CODE_OPERATORS = "=+ -*/ %^ += + = -= - = >= > = <= < = [](){},;";
 
     @Test
     void testTokenOperators() throws Exception {
@@ -205,6 +205,15 @@ class TokenizerTest {
         assertEquals(Token.Type.OP_LTE, tokenizer.getNextToken().getType());
         assertEquals(Token.Type.OP_LT, tokenizer.getNextToken().getType());
         assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+
+        assertEquals(Token.Type.START_ARRAY, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.END_ARRAY, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.START_EXP, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.END_EXP, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.START_BLOCK, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.END_BLOCK, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.SEPARATOR, tokenizer.getNextToken().getType());
+        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -234,6 +243,15 @@ class TokenizerTest {
         assertEquals("<=", tokenizer.getNextToken().getLexeme());
         assertEquals("<", tokenizer.getNextToken().getLexeme());
         assertEquals("=", tokenizer.getNextToken().getLexeme());
+
+        assertEquals("[", tokenizer.getNextToken().getLexeme());
+        assertEquals("]", tokenizer.getNextToken().getLexeme());
+        assertEquals("(", tokenizer.getNextToken().getLexeme());
+        assertEquals(")", tokenizer.getNextToken().getLexeme());
+        assertEquals("{", tokenizer.getNextToken().getLexeme());
+        assertEquals("}", tokenizer.getNextToken().getLexeme());
+        assertEquals(",", tokenizer.getNextToken().getLexeme());
+        assertEquals(";", tokenizer.getNextToken().getLexeme());
     }
 
     @Test

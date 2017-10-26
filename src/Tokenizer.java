@@ -168,6 +168,27 @@ public class Tokenizer {
                     else if (c == '"') {
                         state = State.DOUBLE_QUOTE_START;
                     }
+                    else if (c == ',') {
+                        state = State.SEPARATOR;
+                    }
+                    else if (c == '[') {
+                        state = State.START_ARRAY;
+                    }
+                    else if (c == ']') {
+                        state = State.END_ARRAY;
+                    }
+                    else if (c == '(') {
+                        state = State.START_EXP;
+                    }
+                    else if (c == ')') {
+                        state = State.END_EXP;
+                    }
+                    else if (c == '{') {
+                        state = State.START_BLOCK;
+                    }
+                    else if (c == '}') {
+                        state = State.END_BLOCK;
+                    }
                     else if (c == ';') {
                         state = State.TERMINATOR;
                     }
@@ -357,6 +378,34 @@ public class Tokenizer {
                 case LTE:
                     state = State.INITIAL;
                     return buildTokenAndRollBack(Token.Type.OP_LTE);
+
+                case START_ARRAY:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.START_ARRAY);
+
+                case END_ARRAY:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.END_ARRAY);
+
+                case START_EXP:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.START_EXP);
+
+                case END_EXP:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.END_EXP);
+
+                case START_BLOCK:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.START_BLOCK);
+
+                case END_BLOCK:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.END_BLOCK);
+
+                case SEPARATOR:
+                    state = State.INITIAL;
+                    return buildTokenAndRollBack(Token.Type.SEPARATOR);
 
                 case TERMINATOR:
                     state = State.INITIAL;
