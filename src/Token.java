@@ -60,6 +60,10 @@ public class Token {
         return lexeme;
     }
 
+    public Token(Type type) {
+        this.type = type;
+    }
+
     public Token(Type type, String lexeme) {
         this.type = type;
         this.lexeme = lexeme.trim();

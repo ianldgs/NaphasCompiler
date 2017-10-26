@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class Tokenizer {
     private enum State {
@@ -37,6 +38,9 @@ public class Tokenizer {
         SINGLE_LINE_COMMENT,
     }
 
+    private int lastId = 0;
+    private HashMap<Integer, Token> symbols = new HashMap<Integer, Token>();
+
     private String code;
 
     private State state = State.INITIAL;
@@ -47,6 +51,20 @@ public class Tokenizer {
 
     public Tokenizer(String code) {
         this.code = code + "$";
+
+        symbols.put(++lastId, new Token(Token.Type.IF));
+        symbols.put(++lastId, new Token(Token.Type.ELSE));
+        symbols.put(++lastId, new Token(Token.Type.SWITCH));
+        symbols.put(++lastId, new Token(Token.Type.CASE));
+        symbols.put(++lastId, new Token(Token.Type.FOR));
+        symbols.put(++lastId, new Token(Token.Type.WHILE));
+        symbols.put(++lastId, new Token(Token.Type.DO));
+        symbols.put(++lastId, new Token(Token.Type.CREATE_CONST));
+        symbols.put(++lastId, new Token(Token.Type.CREATE_VAR));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_CHAR));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_FLOAT));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_INT));
+        symbols.put(++lastId, new Token(Token.Type.TYPE_STRING));
     }
 
     private char getNextCharacter() {
@@ -63,7 +81,15 @@ public class Tokenizer {
     }
 
     private Token buildTokenAndRollBack(Token.Type type) {
+        for (Map.Entry<Integer, Token> entry : symbols.entrySet()) {
+            Integer key = entry.getKey();
+            Token value = entry.getValue();
+
+            //TODO: ver se existe o lexema
+        }
+
         back();
+
         return new Token(type, lexeme);
     }
 
