@@ -50,9 +50,15 @@ public class Token {
         DO,
     }
 
+    private int id;
+
     private Type type;
 
     private String lexeme;
+
+    public int getId() {
+        return id;
+    }
 
     public Type getType() {
         return type;
@@ -62,14 +68,14 @@ public class Token {
         return lexeme;
     }
 
-    public Token() { }
-
-    public Token(Type type) {
-        this.type = type;
-    }
-
-    public Token(Type type, String lexeme) {
+    public Token(int id, Type type, String lexeme) {
+        this.id = id;
         this.type = type;
         this.lexeme = lexeme.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "<" + id + ", " + type + ", " + lexeme + ">";
     }
 }
