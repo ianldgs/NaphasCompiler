@@ -25,4 +25,9 @@ public class CaseStatement implements Statement {
         BlockStatement blockStatement = new BlockStatement();
         blockStatement.execute();
     }
+
+    public static boolean isEqualStartStatement() {
+        Parser parser = Parser.getInstance();
+        return parser.isEqualReceivedToken(Type.CASE);
+    }
 }
