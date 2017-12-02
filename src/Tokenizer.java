@@ -69,23 +69,23 @@ public class Tokenizer {
     public Tokenizer(String code) {
         this.code = code + END_CODE;
 
-        symbols.put(++lastId, new Token(lastId, Token.Type.IF, "if"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.ELSE, "else"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.SWITCH, "switch"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.CASE, "case"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.FOR, "for"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.WHILE, "while"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.DO, "do"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.CREATE_CONST, "const"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.CREATE_VAR, "let"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_INT, "int"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_CHAR, "char"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_FLOAT, "float"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_STRING, "string"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.TYPE_BOOLEAN, "boolean"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.LIT_BOOLEAN_TRUE, "true"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.LIT_BOOLEAN_FALSE, "false"));
-        symbols.put(++lastId, new Token(lastId, Token.Type.LIT_NULL, "null"));
+        symbols.put(++lastId, new Token(lastId, Type.IF, "if"));
+        symbols.put(++lastId, new Token(lastId, Type.ELSE, "else"));
+        symbols.put(++lastId, new Token(lastId, Type.SWITCH, "switch"));
+        symbols.put(++lastId, new Token(lastId, Type.CASE, "case"));
+        symbols.put(++lastId, new Token(lastId, Type.FOR, "for"));
+        symbols.put(++lastId, new Token(lastId, Type.WHILE, "while"));
+        symbols.put(++lastId, new Token(lastId, Type.DO, "do"));
+        symbols.put(++lastId, new Token(lastId, Type.CREATE_CONST, "const"));
+        symbols.put(++lastId, new Token(lastId, Type.CREATE_VAR, "let"));
+        symbols.put(++lastId, new Token(lastId, Type.TYPE_INT, "int"));
+        symbols.put(++lastId, new Token(lastId, Type.TYPE_CHAR, "char"));
+        symbols.put(++lastId, new Token(lastId, Type.TYPE_FLOAT, "float"));
+        symbols.put(++lastId, new Token(lastId, Type.TYPE_STRING, "string"));
+        symbols.put(++lastId, new Token(lastId, Type.TYPE_BOOLEAN, "boolean"));
+        symbols.put(++lastId, new Token(lastId, Type.LIT_BOOLEAN_TRUE, "true"));
+        symbols.put(++lastId, new Token(lastId, Type.LIT_BOOLEAN_FALSE, "false"));
+        symbols.put(++lastId, new Token(lastId, Type.LIT_NULL, "null"));
     }
 
     private char getNextCharacter() {
@@ -106,7 +106,7 @@ public class Tokenizer {
         throw new LexicalException(message + ". Near line " + line + " and column " + column);
     }
 
-    private Token buildTokenAndRollBack(Token.Type type) {
+    private Token buildTokenAndRollBack(Type type) {
         state = State.INITIAL;
         back();
 
@@ -114,7 +114,7 @@ public class Tokenizer {
 
         Token token = new Token(currentId, type, lexeme);
 
-        if (type == Token.Type.IDENTIFIER) {
+        if (type == Type.IDENTIFIER) {
             for (Map.Entry<Integer, Token> entry : symbols.entrySet()) {
                 //Integer id = entry.getKey();
                 Token _token = entry.getValue();
@@ -238,7 +238,7 @@ public class Tokenizer {
                 case IDENTIFIER:
                     if (!Character.isLetterOrDigit(c)) {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.IDENTIFIER);
+                        return buildTokenAndRollBack(Type.IDENTIFIER);
                     } else {
                         state = State.IDENTIFIER;
                     }
@@ -253,7 +253,7 @@ public class Tokenizer {
                         state = State.INT;
                     } else if (Character.isWhitespace(c) || c == END_CODE) {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.LIT_INT);
+                        return buildTokenAndRollBack(Type.LIT_INT);
                     } else if (c == '.') {
                         state = State.INT_DOT;
                     } else {
@@ -278,7 +278,7 @@ public class Tokenizer {
                         state = State.FLOAT;
                     } else if (Character.isWhitespace(c) || c == END_CODE) {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.LIT_FLOAT);
+                        return buildTokenAndRollBack(Type.LIT_FLOAT);
                     } else {
                         error("Unexpected: " + c);
                     }
@@ -303,7 +303,7 @@ public class Tokenizer {
 
                 case SINGLE_QUOTE_END:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.LIT_CHAR);
+                    return buildTokenAndRollBack(Type.LIT_CHAR);
 
                 //endregion
 
@@ -325,7 +325,7 @@ public class Tokenizer {
 
                 case DOUBLE_QUOTE_END:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.LIT_STRING);
+                    return buildTokenAndRollBack(Type.LIT_STRING);
 
                 //endregion
 
@@ -336,7 +336,7 @@ public class Tokenizer {
                         state = State.EQUAL;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_ATTRIB);
+                        return buildTokenAndRollBack(Type.OP_ATTRIB);
                     }
                     break;
 
@@ -345,30 +345,30 @@ public class Tokenizer {
                         state = State.ADD_SET;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_ADD);
+                        return buildTokenAndRollBack(Type.OP_ADD);
                     }
                     break;
 
                 case ADD_SET:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_ADD_SET);
+                    return buildTokenAndRollBack(Type.OP_ADD_SET);
 
                 case SUB:
                     if (c == '=') {
                         state = State.SUB_SET;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_SUB);
+                        return buildTokenAndRollBack(Type.OP_SUB);
                     }
                     break;
 
                 case SUB_SET:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_SUB_SET);
+                    return buildTokenAndRollBack(Type.OP_SUB_SET);
 
                 case MULT:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_MULT);
+                    return buildTokenAndRollBack(Type.OP_MULT);
 
                 case DIV:
                     if (c == '/') {
@@ -377,43 +377,43 @@ public class Tokenizer {
                         state = State.MULTI_LINE_START_COMMENT;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_DIV);
+                        return buildTokenAndRollBack(Type.OP_DIV);
                     }
                     break;
 
                 case MOD:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_MOD);
+                    return buildTokenAndRollBack(Type.OP_MOD);
 
                 case EXP:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_EXP);
+                    return buildTokenAndRollBack(Type.OP_EXP);
 
                 case GT:
                     if (c == '=') {
                         state = State.GTE;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_GT);
+                        return buildTokenAndRollBack(Type.OP_GT);
                     }
                     break;
 
                 case GTE:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_GTE);
+                    return buildTokenAndRollBack(Type.OP_GTE);
 
                 case LT:
                     if (c == '=') {
                         state = State.LTE;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_LT);
+                        return buildTokenAndRollBack(Type.OP_LT);
                     }
                     break;
 
                 case LTE:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_LTE);
+                    return buildTokenAndRollBack(Type.OP_LTE);
 
                 //endregion
 
@@ -421,35 +421,35 @@ public class Tokenizer {
 
                 case START_ARRAY:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.START_ARRAY);
+                    return buildTokenAndRollBack(Type.START_ARRAY);
 
                 case END_ARRAY:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.END_ARRAY);
+                    return buildTokenAndRollBack(Type.END_ARRAY);
 
                 case START_EXP:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.START_EXP);
+                    return buildTokenAndRollBack(Type.START_EXP);
 
                 case END_EXP:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.END_EXP);
+                    return buildTokenAndRollBack(Type.END_EXP);
 
                 case START_BLOCK:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.START_BLOCK);
+                    return buildTokenAndRollBack(Type.START_BLOCK);
 
                 case END_BLOCK:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.END_BLOCK);
+                    return buildTokenAndRollBack(Type.END_BLOCK);
 
                 case SEPARATOR:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.SEPARATOR);
+                    return buildTokenAndRollBack(Type.SEPARATOR);
 
                 case TERMINATOR:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.TERMINATOR);
+                    return buildTokenAndRollBack(Type.TERMINATOR);
 
                 //endregion
 
@@ -465,7 +465,7 @@ public class Tokenizer {
 
                 case OR:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_OR);
+                    return buildTokenAndRollBack(Type.OP_OR);
 
                 case AMPERSTAND:
                     if (c == '&') {
@@ -477,14 +477,14 @@ public class Tokenizer {
 
                 case AND:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_AND);
+                    return buildTokenAndRollBack(Type.OP_AND);
 
                 case NOT:
                     if (c == '=') {
                         state = State.NOT_EQUAL;
                     } else {
                         state = State.INITIAL;
-                        return buildTokenAndRollBack(Token.Type.OP_NOT);
+                        return buildTokenAndRollBack(Type.OP_NOT);
                     }
                     break;
 
@@ -498,7 +498,7 @@ public class Tokenizer {
 
                 case DIFF:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_DIFF);
+                    return buildTokenAndRollBack(Type.OP_DIFF);
 
                 case EQUAL:
                     if (c == '=') {
@@ -510,7 +510,7 @@ public class Tokenizer {
 
                 case IDENTICAL:
                     state = State.INITIAL;
-                    return buildTokenAndRollBack(Token.Type.OP_EQUAL);
+                    return buildTokenAndRollBack(Type.OP_EQUAL);
 
                 //endregion
 

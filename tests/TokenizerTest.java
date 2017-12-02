@@ -23,11 +23,11 @@ class TokenizerTest {
     void testTokenConstAttrib() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_CONST_ATTRIB);
 
-        assertEquals(Token.Type.CREATE_CONST, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_CHAR, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.CREATE_CONST, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_CHAR, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
         assertNull(tokenizer.getNextToken());
     }
 
@@ -52,11 +52,11 @@ class TokenizerTest {
     void testTokenConstBogus() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_CONST_BOGUS);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_CHAR, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_CHAR, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -76,11 +76,11 @@ class TokenizerTest {
     void testTokenConstIncomplete() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_CONST_INCOMPLETE);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_CHAR, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_CHAR, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -104,11 +104,11 @@ class TokenizerTest {
     void testTokenLetAttrib() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_LET_ATTRIB);
 
-        assertEquals(Token.Type.CREATE_VAR, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_STRING, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.CREATE_VAR, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_STRING, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -132,11 +132,11 @@ class TokenizerTest {
     void testTokenLetBogus() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_LET_BOGUS);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_STRING, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_STRING, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -156,11 +156,11 @@ class TokenizerTest {
     void testTokenLetIncomplete() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_LET_INCOMPLETE);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_STRING, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_STRING, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -184,45 +184,45 @@ class TokenizerTest {
     void testTokenOperators() throws Exception {
         Tokenizer tokenizer = new Tokenizer(CODE_OPERATORS);
 
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ADD, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_SUB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_MULT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_DIV, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_MOD, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_EXP, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ADD, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_SUB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_MULT, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_DIV, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_MOD, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_EXP, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.OP_ADD_SET, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ADD, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ADD_SET, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ADD, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.OP_SUB_SET, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_SUB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_SUB_SET, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_SUB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.OP_GTE, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_GT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_GTE, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_GT, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.OP_LTE, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_LT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_LTE, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_LT, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.START_ARRAY, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.END_ARRAY, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.START_EXP, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.END_EXP, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.START_BLOCK, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.END_BLOCK, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.SEPARATOR, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.TERMINATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.START_ARRAY, tokenizer.getNextToken().getType());
+        assertEquals(Type.END_ARRAY, tokenizer.getNextToken().getType());
+        assertEquals(Type.START_EXP, tokenizer.getNextToken().getType());
+        assertEquals(Type.END_EXP, tokenizer.getNextToken().getType());
+        assertEquals(Type.START_BLOCK, tokenizer.getNextToken().getType());
+        assertEquals(Type.END_BLOCK, tokenizer.getNextToken().getType());
+        assertEquals(Type.SEPARATOR, tokenizer.getNextToken().getType());
+        assertEquals(Type.TERMINATOR, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.OP_OR, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_AND, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_NOT, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_OR, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_AND, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_NOT, tokenizer.getNextToken().getType());
 
-        assertEquals(Token.Type.OP_EQUAL, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_DIFF, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_EQUAL, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_DIFF, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -274,11 +274,11 @@ class TokenizerTest {
     void testIdentifierAndOperatorsTogether() throws Exception {
         Tokenizer tokenizer = new Tokenizer("a=a+a");
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ATTRIB, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.OP_ADD, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ATTRIB, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.OP_ADD, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
     }
 
     //endregion
@@ -294,13 +294,13 @@ class TokenizerTest {
 
         tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
         assertNull(tokenizer.getNextToken());
 
         tokenizer = new Tokenizer(SINGLE_LINE_COMMENT_CODE_WITH_LINE_BREAK);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -327,13 +327,13 @@ class TokenizerTest {
 
         tokenizer = new Tokenizer(MULTI_LINE_COMMENT_CODE);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
 
         tokenizer = new Tokenizer(MULTI_LINE_COMMENT_CODE_WITH_TEXT);
 
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -364,15 +364,15 @@ class TokenizerTest {
 
         tokenizer = new Tokenizer(INT_CODE);
 
-        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_INT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_INT, tokenizer.getNextToken().getType());
 
         tokenizer = new Tokenizer(INT_INVALID_CODE);
 
         assertThrows(LexicalException.class, tokenizer::getNextToken);
-        assertEquals(Token.Type.IDENTIFIER, tokenizer.getNextToken().getType());
+        assertEquals(Type.IDENTIFIER, tokenizer.getNextToken().getType());
     }
 
     @Test
@@ -405,10 +405,10 @@ class TokenizerTest {
 
         tokenizer = new Tokenizer(FLOAT_CODE);
 
-        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
-        assertEquals(Token.Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_FLOAT, tokenizer.getNextToken().getType());
+        assertEquals(Type.LIT_FLOAT, tokenizer.getNextToken().getType());
 
         tokenizer = new Tokenizer(FLOAT_INVALID_CODE);
 
