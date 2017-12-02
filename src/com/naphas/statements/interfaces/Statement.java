@@ -1,4 +1,4 @@
-package com.naphas.interfaces;
+package com.naphas.statements.interfaces;
 
 import com.naphas.exceptions.SyntaxException;
 

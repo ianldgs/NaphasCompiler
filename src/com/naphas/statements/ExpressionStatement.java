@@ -1,7 +1,7 @@
 package com.naphas.statements;
 
 import com.naphas.exceptions.SyntaxException;
-import com.naphas.interfaces.Statement;
+import com.naphas.statements.interfaces.Statement;
 
 public class ExpressionStatement implements Statement {
     @Override

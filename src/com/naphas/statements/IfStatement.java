@@ -3,7 +3,7 @@ package com.naphas.statements;
 import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
-import com.naphas.interfaces.Statement;
+import com.naphas.statements.interfaces.Statement;
 
 public class IfStatement implements Statement {
     @Override
