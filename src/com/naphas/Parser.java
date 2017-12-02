@@ -18,19 +18,26 @@ public final class Parser {
         this.tokens = tokens;
     }
 
-    public Token getNextToken() {
+    public Type getNextTokenType() {
         int nextIndex = position + 1;
-        return this.tokens.get(nextIndex);
+
+        return this.tokens.get(nextIndex).getType();
     }
 
     private void consume() {
         this.position++;
     }
 
-    public boolean match(Token expected) throws SyntaxException {
-        Token received = this.getNextToken();
+    public boolean isEqualReceivedToken(Type expected) {
+        Type received = this.getNextTokenType();
 
-        boolean isEqualReceivedToken = received.equals(expected);
+        return received.equals(expected);
+    }
+
+    public boolean match(Type expected) throws SyntaxException {
+        Type received = this.getNextTokenType();
+
+        boolean isEqualReceivedToken = this.isEqualReceivedToken(expected);
         this.consume();
 
         if (isEqualReceivedToken) {
