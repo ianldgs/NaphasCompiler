@@ -12,12 +12,16 @@ public class BlockStatement implements Statement {
 
         parser.match(Type.START_BLOCK);
 
+        this.executeBlockContent();
+
+        parser.match(Type.END_BLOCK);
+    }
+
+    protected void executeBlockContent() throws SyntaxException {
         while(!isEqualEndStatement()) {
             ExpressionStatement expressionStatement = new ExpressionStatement();
             expressionStatement.execute();
         }
-
-        parser.match(Type.END_BLOCK);
     }
 
     public static boolean isEqualEndStatement() {
