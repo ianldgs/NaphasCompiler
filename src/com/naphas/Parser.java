@@ -1,5 +1,7 @@
 package com.naphas;
 
+import com.naphas.exceptions.SyntaxException;
+
 import java.util.List;
 
 public final class Parser {

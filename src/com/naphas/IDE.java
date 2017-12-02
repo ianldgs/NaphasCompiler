@@ -7,6 +7,8 @@ package com.naphas; /**
  * DATA DA ÚLTIMA ALTERAÇÃO: 09/10/2017
  **/
 
+import com.naphas.exceptions.LexicalException;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;

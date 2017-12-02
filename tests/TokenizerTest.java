@@ -1,4 +1,4 @@
-import com.naphas.LexicalException;
+import com.naphas.exceptions.LexicalException;
 import com.naphas.Tokenizer;
 import com.naphas.Type;
 import org.junit.jupiter.api.Test;

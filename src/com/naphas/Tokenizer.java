@@ -1,5 +1,7 @@
 package com.naphas;
 
+import com.naphas.exceptions.LexicalException;
+
 import java.util.HashMap;
 import java.util.Map;
 

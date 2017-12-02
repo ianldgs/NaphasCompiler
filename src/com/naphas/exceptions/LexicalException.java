@@ -1,4 +1,4 @@
-package com.naphas;
+package com.naphas.exceptions;
 
 public class LexicalException extends Exception {
     public LexicalException(String message) {
