@@ -12,7 +12,7 @@ public class ElseStatement implements Statement {
 
         parser.match(Type.ELSE);
 
-        if(parser.isEqualReceivedToken(Type.IF)) {
+        if(IfStatement.isEqualStartStatement()) {
             IfStatement ifStatement = new IfStatement();
             ifStatement.execute();
         }
