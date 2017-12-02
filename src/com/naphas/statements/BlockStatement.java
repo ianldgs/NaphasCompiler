@@ -12,11 +12,16 @@ public class BlockStatement implements Statement {
 
         parser.match(Type.START_BLOCK);
 
-        while(!parser.isEqualReceivedToken(Type.END_BLOCK)) {
+        while(!isEqualEndStatement()) {
             ExpressionStatement expressionStatement = new ExpressionStatement();
             expressionStatement.execute();
         }
 
         parser.match(Type.END_BLOCK);
+    }
+
+    public static boolean isEqualEndStatement() {
+        Parser parser = Parser.getInstance();
+        return parser.isEqualReceivedToken(Type.END_BLOCK);
     }
 }
