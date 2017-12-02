@@ -1,3 +1,5 @@
+package com.naphas;
+
 public enum Type {
     IDENTIFIER,
     LIT_INT,

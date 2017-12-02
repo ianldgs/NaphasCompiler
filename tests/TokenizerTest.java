@@ -1,3 +1,6 @@
+import com.naphas.LexicalException;
+import com.naphas.Tokenizer;
+import com.naphas.Type;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

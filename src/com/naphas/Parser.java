@@ -1,3 +1,5 @@
+package com.naphas;
+
 import java.util.List;
 
 public final class Parser {

@@ -1,7 +1,7 @@
-/**
+package com.naphas; /**
  * FACULDADE COTEMIG
  * TRABALHO PRÁTICO - COMPILADORES
- * IDE PARA COMPILADOR
+ * com.naphas.IDE PARA COMPILADOR
  * REVISÃO: 2017.2.1
  * AUTOR: prof. VIRGILIO BORGES DE OLIVEIRA.
  * DATA DA ÚLTIMA ALTERAÇÃO: 09/10/2017
@@ -46,7 +46,7 @@ public class IDE extends JFrame implements ActionListener {
     JMenuItem mnSobre = new JMenuItem("Sobre...", KeyEvent.VK_S);
 
     public IDE() {
-        super("Compiladores - IDE versão 2017.2.1");
+        super("Compiladores - com.naphas.IDE versão 2017.2.1");
         setLayout(null);
 
         mnBar.add(mnArquivo);
@@ -133,7 +133,7 @@ public class IDE extends JFrame implements ActionListener {
         } else if (e.getSource() == mnSair) {
             System.exit(0);
         } else if (e.getSource() == mnSobre) {
-            JOptionPane.showMessageDialog(this, "Trabalho de Compiladores\nIDE versão 2017.2.1\n\nDesenvolvido por: prof. Virgilio Borges de Oliveira\nSomente para fins didáticos.");
+            JOptionPane.showMessageDialog(this, "Trabalho de Compiladores\ncom.naphas.IDE versão 2017.2.1\n\nDesenvolvido por: prof. Virgilio Borges de Oliveira\nSomente para fins didáticos.");
         }
 
     }

@@ -1,3 +1,5 @@
+package com.naphas;
+
 public class Token {
 
 

@@ -1,3 +1,5 @@
+package com.naphas;
+
 import java.util.HashMap;
 import java.util.Map;
 
