@@ -16,7 +16,7 @@ public class IfStatement implements Statement {
         LogicalStatement logicalStatement = new LogicalStatement();
         logicalStatement.execute();
 
-        parser.match(Type.END_BLOCK);
+        parser.match(Type.END_EXP);
 
         BlockStatement blockStatement = new BlockStatement();
         blockStatement.execute();
