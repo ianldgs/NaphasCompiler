@@ -1,10 +1,16 @@
 import java.util.List;
 
-public class Parser {
+public final class Parser {
     private List<Token> tokens;
     private int position = 0;
 
-    public Parser(List<Token> tokens) {
+    private static final Parser INSTANCE = new Parser();
+
+    public static Parser getInstance() {
+        return INSTANCE;
+    }
+
+    public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
 
