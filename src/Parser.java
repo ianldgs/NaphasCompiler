@@ -7,4 +7,13 @@ public class Parser {
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
     }
+
+    public Token getNextToken() {
+        int nextIndex = position + 1;
+        return this.tokens.get(nextIndex);
+    }
+
+    private void consume() {
+        this.position++;
+    }
 }
