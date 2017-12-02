@@ -3,18 +3,12 @@ package com.naphas.statements;
 import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
-import com.naphas.interfaces.Statement;
+import com.naphas.statements.interfaces.ComparisionStatement;
 
-public class LogicalStatement implements Statement {
+public class LogicalStatement implements ComparisionStatement {
     @Override
-    public void execute() throws SyntaxException {
+    public void symbols() throws SyntaxException {
         Parser parser = Parser.getInstance();
-
-        if(parser.isEqualReceivedToken(Type.OP_NOT)) {
-            parser.match(Type.OP_NOT);
-        }
-
-        this.value();
 
         if(parser.isEqualReceivedToken(Type.OP_EQUAL)) {
             parser.match(Type.OP_EQUAL);
@@ -28,18 +22,40 @@ public class LogicalStatement implements Statement {
         else {
             parser.match(Type.OP_OR);
         }
-
-        this.value();
     }
 
-    private void value() throws SyntaxException {
+    @Override
+    public void value() throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        if(parser.isEqualReceivedToken(Type.IDENTIFIER)) {
-            parser.match(Type.IDENTIFIER);
-        }
-        else {
-            parser.match(Type.TYPE_BOOLEAN);
+        switch (parser.getNextTokenType()) {
+            case IDENTIFIER:
+                if(parser.isEqualReceivedToken(Type.OP_NOT)) {
+                    parser.match(Type.OP_NOT);
+                }
+
+                parser.match(Type.IDENTIFIER);
+                break;
+
+            case LIT_STRING:
+                parser.match(Type.LIT_STRING);
+                break;
+
+            case LIT_INT:
+                parser.match(Type.LIT_INT);
+                break;
+
+            case LIT_FLOAT:
+                parser.match(Type.LIT_FLOAT);
+                break;
+
+            case LIT_CHAR:
+                parser.match(Type.LIT_CHAR);
+                break;
+
+            default:
+                parser.match(Type.LIT_BOOLEAN_FALSE);
+                break;
         }
     }
 }
