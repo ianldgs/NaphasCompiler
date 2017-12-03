@@ -2,6 +2,7 @@ package com.naphas.statements.operators;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.ValueStatement;
 import com.naphas.statements.ValueStatementBuilder;
@@ -37,5 +38,11 @@ public class RelationalStatement implements ComparisionStatement {
         else {
             parser.match(Type.OP_LTE);
         }
+    }
+
+    public static boolean isEqualStartToken() {
+        Type[] tokens = { Type.OP_GT, Type.OP_GTE, Type.OP_LT, Type.OP_LTE };
+
+        return Utils.isEqualStartToken(tokens);
     }
 }
