@@ -3,7 +3,7 @@ package com.naphas.statements.loop;
 import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
-import com.naphas.statements.expression.BooleanExpression;
+import com.naphas.statements.algebra.equation.BooleanEquation;
 import com.naphas.statements.interfaces.Statement;
 
 public class LoopStatement implements Statement {
@@ -19,8 +19,8 @@ public class LoopStatement implements Statement {
     private void termination() throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        BooleanExpression booleanExpression = new BooleanExpression();
-        booleanExpression.execute();
+        BooleanEquation booleanEquation = new BooleanEquation();
+        booleanEquation.execute();
 
         parser.match(Type.TERMINATOR);
     }

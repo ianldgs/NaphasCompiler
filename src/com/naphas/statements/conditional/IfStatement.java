@@ -5,8 +5,7 @@ import com.naphas.Type;
 import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
-import com.naphas.statements.expression.BooleanExpression;
-import com.naphas.statements.interfaces.Statement;
+import com.naphas.statements.algebra.equation.BooleanEquation;
 
 public class IfStatement extends BlockStatement {
     @Override
@@ -16,8 +15,8 @@ public class IfStatement extends BlockStatement {
         parser.match(Type.IF);
         parser.match(Type.START_EXP);
 
-        BooleanExpression booleanExpression = new BooleanExpression();
-        booleanExpression.execute();
+        BooleanEquation booleanEquation = new BooleanEquation();
+        booleanEquation.execute();
 
         parser.match(Type.END_EXP);
 

@@ -1,4 +1,4 @@
-package com.naphas.statements.operators;
+package com.naphas.statements.algebra.expression;
 
 import com.naphas.Parser;
 import com.naphas.Type;
@@ -8,7 +8,7 @@ import com.naphas.statements.ValueStatement;
 import com.naphas.statements.ValueStatementBuilder;
 import com.naphas.statements.interfaces.MirroredOperationStatement;
 
-public class LogicalStatement implements MirroredOperationStatement {
+public class LogicalExpression implements MirroredOperationStatement {
     @Override
     public void symbols() throws SyntaxException {
         Parser parser = Parser.getInstance();
