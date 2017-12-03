@@ -18,7 +18,7 @@ public final class Parser {
         this.tokens = tokens;
     }
 
-    public Type getNextTokenType() {
+    private Type getNextTokenType() {
         int nextIndex = position + 1;
 
         return this.tokens.get(nextIndex).getType();
