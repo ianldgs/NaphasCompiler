@@ -37,4 +37,17 @@ public class LogicalStatement implements ComparisionStatement {
 
         valueStatement.execute();
     }
+
+    public static boolean isEqualStartToken() {
+        Parser parser = Parser.getInstance();
+        Type[] tokens = { Type.OP_EQUAL, Type.OP_DIFF, Type.OP_DIFF, Type.OP_AND, Type.OP_OR };
+
+        boolean isEqual = false;
+
+        for (int i = 0; i < tokens.length; i++) {
+            isEqual = parser.isEqualReceivedToken(tokens[i]) || isEqual;
+        }
+
+        return isEqual;
+    }
 }
