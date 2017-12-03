@@ -5,11 +5,14 @@ import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.interfaces.Statement;
 
+import java.util.Collections;
 import java.util.ListIterator;
 
 public class ValueStatement implements Statement {
-    private ListIterator<Type> allowedTypes;
+    private ListIterator<Type> allowedTypes = Collections.emptyListIterator();
     private boolean allowedNotIdentifier = false;
+
+    public ValueStatement() {}
 
     public ValueStatement(ListIterator<Type> allowedTypes, boolean allowedNotIdentifier) {
         this.allowedTypes = allowedTypes;
