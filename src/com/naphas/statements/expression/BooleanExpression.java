@@ -19,4 +19,9 @@ public class BooleanExpression extends ExpressionStatement {
 
         statement.execute();
     }
+
+    public static boolean isEqualStartToken() {
+        return  LogicalStatement.isEqualStartToken() &&
+                RelationalStatement.isEqualStartToken();
+    }
 }
