@@ -1,8 +1,10 @@
-package com.naphas.statements;
+package com.naphas.statements.operators;
 
 import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
+import com.naphas.statements.ValueStatement;
+import com.naphas.statements.ValueStatementBuilder;
 import com.naphas.statements.interfaces.ComparisionStatement;
 
 public class RelationalStatement implements ComparisionStatement {
