@@ -1,4 +1,4 @@
-package com.naphas.statements;
+package com.naphas.statements.conditional;
 
 import com.naphas.Parser;
 import com.naphas.Type;

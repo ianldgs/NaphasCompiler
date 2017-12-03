@@ -1,9 +1,11 @@
-package com.naphas.statements;
+package com.naphas.statements.conditional;
 
 import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
+import com.naphas.statements.BlockStatement;
 import com.naphas.statements.interfaces.Statement;
+import com.naphas.statements.operators.LogicalStatement;
 
 public class IfStatement implements Statement {
     @Override
