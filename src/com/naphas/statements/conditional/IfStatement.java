@@ -8,7 +8,7 @@ import com.naphas.statements.BlockStatement;
 import com.naphas.statements.expression.BooleanExpression;
 import com.naphas.statements.interfaces.Statement;
 
-public class IfStatement implements Statement {
+public class IfStatement extends BlockStatement {
     @Override
     public void execute() throws SyntaxException {
         Parser parser = Parser.getInstance();
@@ -21,8 +21,7 @@ public class IfStatement implements Statement {
 
         parser.match(Type.END_EXP);
 
-        BlockStatement blockStatement = new BlockStatement();
-        blockStatement.execute();
+        super.execute();
     }
 
     public static boolean isEqualStartStatement() {

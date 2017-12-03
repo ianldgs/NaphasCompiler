@@ -9,7 +9,7 @@ import com.naphas.statements.ValueStatement;
 import com.naphas.statements.ValueStatementBuilder;
 import com.naphas.statements.interfaces.Statement;
 
-public class CaseStatement implements Statement {
+public class CaseStatement extends BlockStatement {
     @Override
     public void execute() throws SyntaxException {
         Parser parser = Parser.getInstance();
@@ -24,8 +24,7 @@ public class CaseStatement implements Statement {
 
         valueStatement.execute();
 
-        BlockStatement blockStatement = new BlockStatement();
-        blockStatement.execute();
+        super.execute();
     }
 
     public static boolean isEqualStartStatement() {
