@@ -39,6 +39,13 @@ public class ValueStatementBuilder {
         return this;
     }
 
+    public ValueStatementBuilder allowNumber() {
+        this.allowInt()
+            .allowFloat();
+
+        return this;
+    }
+
     public ValueStatementBuilder allowChar() {
         this.allowedTypes.add(Type.LIT_CHAR);
         return this;
