@@ -7,10 +7,6 @@ import com.naphas.statements.BlockStatement;
 import com.naphas.statements.operators.ArithmeticStatement;
 
 public class ForStatement extends LoopStatement {
-    public ForStatement() {
-        super();
-    }
-
     @Override
     public void execute() throws SyntaxException {
         Parser parser = Parser.getInstance();
