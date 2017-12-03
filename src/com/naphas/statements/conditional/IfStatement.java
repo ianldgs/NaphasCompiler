@@ -2,6 +2,7 @@ package com.naphas.statements.conditional;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
 import com.naphas.statements.expression.BooleanExpression;
@@ -25,7 +26,6 @@ public class IfStatement implements Statement {
     }
 
     public static boolean isEqualStartStatement() {
-        Parser parser = Parser.getInstance();
-        return parser.isEqualReceivedToken(Type.IF);
+        return Utils.isEqualStartStatement(Type.IF);
     }
 }

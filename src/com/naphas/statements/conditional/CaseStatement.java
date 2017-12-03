@@ -2,6 +2,7 @@ package com.naphas.statements.conditional;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
 import com.naphas.statements.ValueStatement;
@@ -28,7 +29,6 @@ public class CaseStatement implements Statement {
     }
 
     public static boolean isEqualStartStatement() {
-        Parser parser = Parser.getInstance();
-        return parser.isEqualReceivedToken(Type.CASE);
+        return Utils.isEqualStartStatement(Type.CASE);
     }
 }

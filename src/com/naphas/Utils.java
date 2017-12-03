@@ -13,4 +13,9 @@ public class Utils {
 
         return isEqual;
     }
+
+    public static boolean isEqualStartStatement(Type type) {
+        Parser parser = Parser.getInstance();
+        return parser.isEqualReceivedToken(type);
+    }
 }
