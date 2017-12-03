@@ -2,7 +2,7 @@ package com.naphas.statements.interfaces;
 
 import com.naphas.exceptions.SyntaxException;
 
-public interface ComparisionStatement extends OperationStatement {
+public interface MirroredOperationStatement extends OperationStatement {
     void value() throws SyntaxException;
 
     @Override

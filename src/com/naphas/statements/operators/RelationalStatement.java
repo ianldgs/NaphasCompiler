@@ -6,9 +6,9 @@ import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.ValueStatement;
 import com.naphas.statements.ValueStatementBuilder;
-import com.naphas.statements.interfaces.ComparisionStatement;
+import com.naphas.statements.interfaces.MirroredOperationStatement;
 
-public class RelationalStatement implements ComparisionStatement {
+public class RelationalStatement implements MirroredOperationStatement {
 
     @Override
     public void value() throws SyntaxException {
