@@ -1,10 +1,39 @@
 package com.naphas.statements.loop;
 
-import com.naphas.statements.interfaces.Statement;
+import com.naphas.Parser;
+import com.naphas.Type;
+import com.naphas.exceptions.SyntaxException;
+import com.naphas.statements.BlockStatement;
 
-public class ForStatement implements Statement {
+public class ForStatement extends LoopStatement {
+    public ForStatement() {
+        super();
+    }
+
     @Override
-    public void execute() {
+    public void execute() throws SyntaxException {
+        Parser parser = Parser.getInstance();
+        parser.match(Type.FOR);
 
+        super.execute();
+
+        BlockStatement blockStatement = new BlockStatement();
+        blockStatement.execute();
+    }
+
+    @Override
+    protected void expression() throws SyntaxException {
+        this.initialization();
+        super.expression();
+        this.increment();
+    }
+
+    private void initialization() throws SyntaxException {
+        Parser parser = Parser.getInstance();
+        parser.match(Type.TERMINATOR);
+    }
+
+    private void increment() throws SyntaxException {
+        Parser parser = Parser.getInstance();
     }
 }
