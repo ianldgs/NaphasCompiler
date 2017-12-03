@@ -28,34 +28,11 @@ public class LogicalStatement implements ComparisionStatement {
     public void value() throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        switch (parser.getNextTokenType()) {
-            case IDENTIFIER:
-                if(parser.isEqualReceivedToken(Type.OP_NOT)) {
-                    parser.match(Type.OP_NOT);
-                }
+        ValueStatement valueStatement = new ValueStatementBuilder()
+                .allowNotIdentifier()
+                .allowAllTypes()
+                .build();
 
-                parser.match(Type.IDENTIFIER);
-                break;
-
-            case LIT_STRING:
-                parser.match(Type.LIT_STRING);
-                break;
-
-            case LIT_INT:
-                parser.match(Type.LIT_INT);
-                break;
-
-            case LIT_FLOAT:
-                parser.match(Type.LIT_FLOAT);
-                break;
-
-            case LIT_CHAR:
-                parser.match(Type.LIT_CHAR);
-                break;
-
-            default:
-                parser.match(Type.LIT_BOOLEAN_FALSE);
-                break;
-        }
+        valueStatement.execute();
     }
 }

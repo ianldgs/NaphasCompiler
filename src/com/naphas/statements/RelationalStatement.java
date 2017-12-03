@@ -11,15 +11,12 @@ public class RelationalStatement implements ComparisionStatement {
     public void value() throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        if(parser.isEqualReceivedToken(Type.IDENTIFIER)) {
-            parser.match(Type.IDENTIFIER);
-        }
-        else if(parser.isEqualReceivedToken(Type.LIT_FLOAT)) {
-            parser.match(Type.LIT_FLOAT);
-        }
-        else {
-            parser.match(Type.LIT_INT);
-        }
+        ValueStatement valueStatement = new ValueStatementBuilder()
+                .allowFloat()
+                .allowInt()
+                .build();
+
+        valueStatement.execute();
     }
 
     @Override
