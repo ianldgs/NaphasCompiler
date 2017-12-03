@@ -4,6 +4,8 @@ import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
+import com.naphas.statements.ValueStatement;
+import com.naphas.statements.ValueStatementBuilder;
 import com.naphas.statements.interfaces.Statement;
 
 public class CaseStatement implements Statement {
@@ -13,15 +15,13 @@ public class CaseStatement implements Statement {
 
         parser.match(Type.CASE);
 
-        if(parser.isEqualReceivedToken(Type.LIT_STRING)) {
-            parser.match(Type.LIT_STRING);
-        }
-        else if(parser.isEqualReceivedToken(Type.LIT_CHAR)) {
-            parser.match(Type.LIT_CHAR);
-        }
-        else {
-            parser.match(Type.LIT_INT);
-        }
+        ValueStatement valueStatement = new ValueStatementBuilder()
+                .allowChar()
+                .allowInt()
+                .allowString()
+                .build();
+
+        valueStatement.execute();
 
         BlockStatement blockStatement = new BlockStatement();
         blockStatement.execute();
