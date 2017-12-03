@@ -2,6 +2,7 @@ package com.naphas.statements.operators;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.ValueStatement;
 import com.naphas.statements.ValueStatementBuilder;
@@ -39,15 +40,8 @@ public class LogicalStatement implements ComparisionStatement {
     }
 
     public static boolean isEqualStartToken() {
-        Parser parser = Parser.getInstance();
         Type[] tokens = { Type.OP_EQUAL, Type.OP_DIFF, Type.OP_DIFF, Type.OP_AND, Type.OP_OR };
 
-        boolean isEqual = false;
-
-        for (int i = 0; i < tokens.length; i++) {
-            isEqual = parser.isEqualReceivedToken(tokens[i]) || isEqual;
-        }
-
-        return isEqual;
+        return Utils.isEqualStartToken(tokens);
     }
 }
