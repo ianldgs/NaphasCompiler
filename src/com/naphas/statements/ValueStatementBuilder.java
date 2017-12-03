@@ -9,6 +9,16 @@ public class ValueStatementBuilder {
     private List<Type> allowedTypes = new ArrayList<Type>();
     private boolean allowNotIdentifier = false;
 
+    public ValueStatementBuilder allowAllTypes() {
+        this.allowBoolean()
+            .allowChar()
+            .allowString()
+            .allowFloat()
+            .allowInt();
+
+        return this;
+    }
+
     public ValueStatementBuilder allowNotIdentifier() {
         this.allowNotIdentifier = true;
         return this;
