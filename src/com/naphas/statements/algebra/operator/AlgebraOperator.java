@@ -1,7 +1,5 @@
 package com.naphas.statements.algebra.operator;
 
-import com.naphas.Type;
-import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.algebra.equation.AlgebraEquation;
 import com.naphas.statements.algebra.expression.AlgebraExpression;
