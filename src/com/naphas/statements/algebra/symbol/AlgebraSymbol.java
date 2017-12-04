@@ -12,7 +12,7 @@ import java.util.List;
 public interface AlgebraSymbol extends Statement {
     @Override
     default void execute() throws SyntaxException {
-        Utils.validateTypesAllowed(this.acceptedSymbols().listIterator());
+        Utils.validateSymbolsAllowed(this.acceptedSymbols().listIterator());
 
         this.operator().execute();
     }

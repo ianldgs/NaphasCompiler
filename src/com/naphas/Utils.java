@@ -6,16 +6,21 @@ import java.util.ListIterator;
 
 public class Utils {
 
-    public static void validateTypesAllowed(ListIterator<Type> allowedTypes) throws SyntaxException {
+    public static boolean validateSymbolsAllowed(ListIterator<Type> allowedSymbols) throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        while(allowedTypes.hasNext()) {
-            Type type = allowedTypes.next();
+        boolean isAnySymbolAllowed = false;
 
-            if(parser.isEqualReceivedToken(Type.OP_NOT)) {
-                parser.match(Type.OP_NOT);
+        while(allowedSymbols.hasNext()) {
+            Type type = allowedSymbols.next();
+
+            if(parser.isEqualReceivedToken(type)) {
+                isAnySymbolAllowed = true;
+                parser.match(type);
             }
         }
+
+        return isAnySymbolAllowed;
     }
 
     public static boolean isEqualStartToken(Type[] tokens) {
