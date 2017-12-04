@@ -18,7 +18,7 @@ public interface AlgebraExpression extends Statement {
             parser.match(Type.START_EXP);
         }
 
-        this.symbol().acceptedValues();
+        this.symbol().acceptedValues().execute();
 
         AlgebraSymbol algebraSymbol = this.symbol();
         algebraSymbol.execute();
