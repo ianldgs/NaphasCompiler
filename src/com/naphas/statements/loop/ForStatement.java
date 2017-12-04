@@ -4,6 +4,7 @@ import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
+import com.naphas.statements.algebra.equation.ArithmeticEquation;
 import com.naphas.statements.algebra.expression.ArithmeticExpression;
 
 public class ForStatement extends LoopStatement {
@@ -31,7 +32,7 @@ public class ForStatement extends LoopStatement {
     }
 
     private void increment() throws SyntaxException {
-        ArithmeticExpression arithmeticExpression = new ArithmeticExpression();
-        arithmeticExpression.execute();
+        ArithmeticEquation arithmeticEquation = new ArithmeticEquation();
+        arithmeticEquation.execute();
     }
 }
