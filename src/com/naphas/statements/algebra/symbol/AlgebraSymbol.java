@@ -14,7 +14,7 @@ public interface AlgebraSymbol extends Statement {
     default void execute() throws SyntaxException {
         Utils.validateTypesAllowed(this.acceptedSymbols().listIterator());
 
-        AlgebraOperator algebraOperator = this.operator();
+        this.operator().execute();
     }
 
     List<Type> acceptedSymbols();
