@@ -8,15 +8,12 @@ import com.naphas.statements.interfaces.Statement;
 public interface AlgebraOperator extends Statement {
     @Override
     default void execute() throws SyntaxException {
-        AlgebraEquation equation = this.equation();
-        equation.execute();
+        this.equation().execute();
 
-        AlgebraExpression expression = this.expression();
-        expression.execute();
+        this.expression().execute();
     }
 
     AlgebraEquation equation();
 
     AlgebraExpression expression();
-
 }
