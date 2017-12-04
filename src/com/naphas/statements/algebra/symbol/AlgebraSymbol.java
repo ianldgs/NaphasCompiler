@@ -16,7 +16,7 @@ public interface AlgebraSymbol extends Statement {
         ListIterator<Type> listIteratorAcceptedSymbols = this.acceptedSymbols().listIterator();
         boolean isAnySymbolAllowed = Utils.validateSymbolsAllowed(listIteratorAcceptedSymbols);
 
-        if(isAnySymbolAllowed) {
+        if (isAnySymbolAllowed) {
             this.operator().execute();
         }
     }

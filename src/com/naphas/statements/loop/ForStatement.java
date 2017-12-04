@@ -5,7 +5,6 @@ import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
 import com.naphas.statements.algebra.equation.ArithmeticEquation;
-import com.naphas.statements.algebra.expression.ArithmeticExpression;
 
 public class ForStatement extends LoopStatement {
     @Override

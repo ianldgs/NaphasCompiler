@@ -13,7 +13,8 @@ public class ValueStatement implements Statement {
     private ListIterator<Type> allowedTypes = Collections.emptyListIterator();
     private boolean allowedNotIdentifier = false;
 
-    public ValueStatement() {}
+    public ValueStatement() {
+    }
 
     public ValueStatement(ListIterator<Type> allowedTypes, boolean allowedNotIdentifier) {
         this.allowedTypes = allowedTypes;
@@ -26,7 +27,7 @@ public class ValueStatement implements Statement {
 
         Utils.validateTypesAllowed(this.allowedTypes);
 
-        if(this.allowedNotIdentifier && parser.isEqualReceivedToken(Type.OP_NOT)) {
+        if (this.allowedNotIdentifier && parser.isEqualReceivedToken(Type.OP_NOT)) {
             parser.match(Type.OP_NOT);
         }
 

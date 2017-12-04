@@ -9,23 +9,13 @@ package com.naphas; /**
 
 import com.naphas.exceptions.LexicalException;
 
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.KeyStroke;
 
 public class IDE extends JFrame implements ActionListener {
     JTextPane editor = new JTextPane();
@@ -116,10 +106,10 @@ public class IDE extends JFrame implements ActionListener {
         } else if (e.getSource() == mnCompilar) {
             msg.setText("");
 
-    		Tokenizer tokenizer = new Tokenizer(editor.getText());
+            Tokenizer tokenizer = new Tokenizer(editor.getText());
 
-    		while (true) {
-    		    try {
+            while (true) {
+                try {
                     Token token = tokenizer.getNextToken();
 
                     if (token == null) {
@@ -128,7 +118,7 @@ public class IDE extends JFrame implements ActionListener {
 
                     msg.setText(msg.getText() + "\n" + token.toString());
                 } catch (LexicalException ex) {
-    		        msg.setText(msg.getText() + "\n" + ex.getMessage() + "\n");
+                    msg.setText(msg.getText() + "\n" + ex.getMessage() + "\n");
                     ex.printStackTrace();
                 }
             }

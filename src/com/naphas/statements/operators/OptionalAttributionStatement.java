@@ -11,7 +11,7 @@ public class OptionalAttributionStatement extends AttributionStatement {
 
         Parser parser = Parser.getInstance();
 
-        if(parser.isEqualReceivedToken(Type.OP_ATTRIB)) {
+        if (parser.isEqualReceivedToken(Type.OP_ATTRIB)) {
             super.symbols();
             super.rightValue();
         }

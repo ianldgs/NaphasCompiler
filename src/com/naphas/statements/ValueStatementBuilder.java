@@ -11,10 +11,10 @@ public class ValueStatementBuilder {
 
     public ValueStatementBuilder allowAllTypes() {
         this.allowBoolean()
-            .allowChar()
-            .allowString()
-            .allowFloat()
-            .allowInt();
+                .allowChar()
+                .allowString()
+                .allowFloat()
+                .allowInt();
 
         return this;
     }
@@ -41,7 +41,7 @@ public class ValueStatementBuilder {
 
     public ValueStatementBuilder allowNumber() {
         this.allowInt()
-            .allowFloat();
+                .allowFloat();
 
         return this;
     }

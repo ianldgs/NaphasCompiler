@@ -13,6 +13,8 @@ public interface OperationStatement extends Statement {
     }
 
     void leftValue() throws SyntaxException;
+
     void symbols() throws SyntaxException;
+
     void rightValue() throws SyntaxException;
 }

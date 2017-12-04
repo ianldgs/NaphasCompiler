@@ -7,7 +7,6 @@ import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
 import com.naphas.statements.ValueStatement;
 import com.naphas.statements.ValueStatementBuilder;
-import com.naphas.statements.interfaces.Statement;
 
 public class CaseStatement extends BlockStatement {
     @Override

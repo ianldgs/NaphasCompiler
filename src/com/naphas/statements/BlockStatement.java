@@ -19,7 +19,7 @@ public class BlockStatement implements Statement {
     }
 
     protected void executeBlockContent() throws SyntaxException {
-        while(!isEqualEndStatement()) {
+        while (!isEqualEndStatement()) {
             ExpressionStatement expressionStatement = new ExpressionStatement();
             expressionStatement.execute();
         }

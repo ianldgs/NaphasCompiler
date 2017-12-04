@@ -12,7 +12,7 @@ public class WhileStatement extends LoopStatement {
 
         boolean isDoWhile = parser.isEqualReceivedToken(Type.DO);
 
-        if(isDoWhile) {
+        if (isDoWhile) {
             DoStatement doStatement = new DoStatement();
             doStatement.execute();
         }
@@ -20,7 +20,7 @@ public class WhileStatement extends LoopStatement {
         parser.match(Type.WHILE);
         super.execute();
 
-        if(!isDoWhile) {
+        if (!isDoWhile) {
             BlockStatement blockStatement = new BlockStatement();
             blockStatement.execute();
         }

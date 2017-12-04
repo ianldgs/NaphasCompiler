@@ -159,80 +159,55 @@ public class Tokenizer {
                 case INITIAL:
                     if (Character.isWhitespace(c)) {
                         state = State.INITIAL;
-                    }
-                    else if (c == '=') {
+                    } else if (c == '=') {
                         state = State.ATTRIB;
-                    }
-                    else if (c == '+') {
+                    } else if (c == '+') {
                         state = State.ADD;
-                    }
-                    else if (c == '-') {
+                    } else if (c == '-') {
                         state = State.SUB;
-                    }
-                    else if (c == '*') {
+                    } else if (c == '*') {
                         state = State.MULT;
-                    }
-                    else if (c == '/') {
+                    } else if (c == '/') {
                         state = State.DIV;
-                    }
-                    else if (c == '%') {
+                    } else if (c == '%') {
                         state = State.MOD;
-                    }
-                    else if (c == '^') {
+                    } else if (c == '^') {
                         state = State.EXP;
-                    }
-                    else if (c == '>') {
+                    } else if (c == '>') {
                         state = State.GT;
-                    }
-                    else if (c == '<') {
+                    } else if (c == '<') {
                         state = State.LT;
-                    }
-                    else if (c == '\'') {
+                    } else if (c == '\'') {
                         state = State.SINGLE_QUOTE_START;
-                    }
-                    else if (c == '"') {
+                    } else if (c == '"') {
                         state = State.DOUBLE_QUOTE_START;
-                    }
-                    else if (c == ',') {
+                    } else if (c == ',') {
                         state = State.SEPARATOR;
-                    }
-                    else if (c == '[') {
+                    } else if (c == '[') {
                         state = State.START_ARRAY;
-                    }
-                    else if (c == ']') {
+                    } else if (c == ']') {
                         state = State.END_ARRAY;
-                    }
-                    else if (c == '(') {
+                    } else if (c == '(') {
                         state = State.START_EXP;
-                    }
-                    else if (c == ')') {
+                    } else if (c == ')') {
                         state = State.END_EXP;
-                    }
-                    else if (c == '{') {
+                    } else if (c == '{') {
                         state = State.START_BLOCK;
-                    }
-                    else if (c == '}') {
+                    } else if (c == '}') {
                         state = State.END_BLOCK;
-                    }
-                    else if (c == '|') {
+                    } else if (c == '|') {
                         state = State.PIPE;
-                    }
-                    else if (c == '&') {
+                    } else if (c == '&') {
                         state = State.AMPERSTAND;
-                    }
-                    else if (c == '!') {
+                    } else if (c == '!') {
                         state = State.NOT;
-                    }
-                    else if (c == ';') {
+                    } else if (c == ';') {
                         state = State.TERMINATOR;
-                    }
-                    else if (Character.isLetter(c)) {
+                    } else if (Character.isLetter(c)) {
                         state = State.IDENTIFIER;
-                    }
-                    else if (Character.isDigit(c)) {
+                    } else if (Character.isDigit(c)) {
                         state = State.INT;
-                    }
-                    else {
+                    } else {
                         if (position < code.length()) {
                             error("Unexpected: " + c);
                         }

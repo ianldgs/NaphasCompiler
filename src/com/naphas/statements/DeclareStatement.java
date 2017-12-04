@@ -12,17 +12,16 @@ public class DeclareStatement implements Statement {
     public void execute() throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        if(parser.isEqualReceivedToken(Type.CREATE_VAR)) {
+        if (parser.isEqualReceivedToken(Type.CREATE_VAR)) {
             parser.match(Type.CREATE_VAR);
-        }
-        else {
+        } else {
             parser.match(Type.CREATE_CONST);
         }
 
         AttributionStatement attributionStatement = new OptionalAttributionStatement();
         attributionStatement.execute();
 
-        while(!parser.isEqualReceivedToken(Type.TERMINATOR)) {
+        while (!parser.isEqualReceivedToken(Type.TERMINATOR)) {
             parser.match(Type.SEPARATOR);
             attributionStatement.execute();
         }

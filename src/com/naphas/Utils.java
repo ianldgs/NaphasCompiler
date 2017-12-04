@@ -11,10 +11,10 @@ public class Utils {
 
         boolean isAnySymbolAllowed = false;
 
-        while(allowedSymbols.hasNext()) {
+        while (allowedSymbols.hasNext()) {
             Type type = allowedSymbols.next();
 
-            if(parser.isEqualReceivedToken(type)) {
+            if (parser.isEqualReceivedToken(type)) {
                 isAnySymbolAllowed = true;
                 parser.match(type);
             }

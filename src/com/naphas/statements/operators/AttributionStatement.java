@@ -18,13 +18,11 @@ public class AttributionStatement implements OperationStatement {
     public void symbols() throws SyntaxException {
         Parser parser = Parser.getInstance();
 
-        if(parser.isEqualReceivedToken(Type.OP_ADD_SET)) {
+        if (parser.isEqualReceivedToken(Type.OP_ADD_SET)) {
             parser.match(Type.OP_ADD_SET);
-        }
-        else if(parser.isEqualReceivedToken(Type.OP_SUB_SET)) {
+        } else if (parser.isEqualReceivedToken(Type.OP_SUB_SET)) {
             parser.match(Type.OP_SUB_SET);
-        }
-        else {
+        } else {
             parser.match(Type.OP_ATTRIB);
         }
     }

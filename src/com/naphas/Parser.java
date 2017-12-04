@@ -42,8 +42,7 @@ public final class Parser {
 
         if (isEqualReceivedToken) {
             return isEqualReceivedToken;
-        }
-        else {
+        } else {
             String message = "Expected token %1, but got %2 instead.";
 
             message = String.format(
