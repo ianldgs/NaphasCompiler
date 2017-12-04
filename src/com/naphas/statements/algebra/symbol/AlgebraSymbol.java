@@ -8,11 +8,13 @@ import com.naphas.statements.algebra.operator.AlgebraOperator;
 import com.naphas.statements.interfaces.Statement;
 
 import java.util.List;
+import java.util.ListIterator;
 
 public interface AlgebraSymbol extends Statement {
     @Override
     default void execute() throws SyntaxException {
-        boolean isAnySymbolAllowed = Utils.validateSymbolsAllowed(this.acceptedSymbols().listIterator());
+        ListIterator<Type> listIteratorAcceptedSymbols = this.acceptedSymbols().listIterator();
+        boolean isAnySymbolAllowed = Utils.validateSymbolsAllowed(listIteratorAcceptedSymbols);
 
         if(isAnySymbolAllowed) {
             this.operator().execute();
