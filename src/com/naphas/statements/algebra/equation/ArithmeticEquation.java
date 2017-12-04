@@ -1,13 +1,12 @@
 package com.naphas.statements.algebra.equation;
 
-import com.naphas.exceptions.SyntaxException;
-import com.naphas.statements.expression.ExpressionStatement;
+import com.naphas.statements.algebra.expression.AlgebraExpression;
 import com.naphas.statements.algebra.expression.ArithmeticExpression;
 
-public class ArithmeticEquation extends ExpressionStatement {
+public class ArithmeticEquation implements AlgebraEquation {
+
     @Override
-    public void execute() throws SyntaxException {
-        ArithmeticExpression arithmeticExpression = new ArithmeticExpression();
-        arithmeticExpression.execute();
+    public AlgebraExpression expression() {
+        return new ArithmeticExpression();
     }
 }
