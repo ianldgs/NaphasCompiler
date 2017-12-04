@@ -12,9 +12,11 @@ import java.util.List;
 public interface AlgebraSymbol extends Statement {
     @Override
     default void execute() throws SyntaxException {
-        Utils.validateSymbolsAllowed(this.acceptedSymbols().listIterator());
+        boolean isAnySymbolAllowed = Utils.validateSymbolsAllowed(this.acceptedSymbols().listIterator());
 
-        this.operator().execute();
+        if(isAnySymbolAllowed) {
+            this.operator().execute();
+        }
     }
 
     List<Type> acceptedSymbols();
