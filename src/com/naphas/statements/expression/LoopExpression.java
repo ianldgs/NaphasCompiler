@@ -18,12 +18,12 @@ public class LoopExpression implements Statement {
             statement = new WhileStatement();
         }
 
-        if(this.isEqualStartStatement()) {
+        if(isEqualStartStatement()) {
             statement.execute();
         }
     }
 
-    public boolean isEqualStartStatement() {
+    public static boolean isEqualStartStatement() {
         return (
                 ForStatement.isEqualStartStatement() ||
                 WhileStatement.isEqualStartStatement()
