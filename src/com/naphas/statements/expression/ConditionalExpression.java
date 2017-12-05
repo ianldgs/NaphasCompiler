@@ -18,12 +18,12 @@ public class ConditionalExpression implements Statement {
             statement = new IfStatement();
         }
 
-        if(this.isEqualStartStatement()) {
+        if(isEqualStartStatement()) {
             statement.execute();
         }
     }
 
-    public boolean isEqualStartStatement() {
+    public static boolean isEqualStartStatement() {
         return (
                 IfStatement.isEqualStartStatement() ||
                 SwitchStatement.isEqualStartStatement()
