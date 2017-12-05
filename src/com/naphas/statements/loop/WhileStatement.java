@@ -2,6 +2,7 @@ package com.naphas.statements.loop;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
 
@@ -24,5 +25,9 @@ public class WhileStatement extends LoopStatement {
             BlockStatement blockStatement = new BlockStatement();
             blockStatement.execute();
         }
+    }
+
+    public static boolean isEqualStartStatement() {
+        return Utils.isEqualStartStatement(Type.DO) || Utils.isEqualStartStatement(Type.WHILE);
     }
 }

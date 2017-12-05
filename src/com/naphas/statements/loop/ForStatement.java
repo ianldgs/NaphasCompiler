@@ -2,6 +2,7 @@ package com.naphas.statements.loop;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
 import com.naphas.statements.DeclareStatement;
@@ -38,5 +39,9 @@ public class ForStatement extends LoopStatement {
     private void increment() throws SyntaxException {
         ArithmeticEquation arithmeticEquation = new ArithmeticEquation();
         arithmeticEquation.execute();
+    }
+
+    public static boolean isEqualStartStatement() {
+        return Utils.isEqualStartStatement(Type.FOR);
     }
 }
