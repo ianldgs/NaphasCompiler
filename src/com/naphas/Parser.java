@@ -18,6 +18,10 @@ public final class Parser {
         this.tokens = tokens;
     }
 
+    public boolean isEndOfFile() {
+        return (this.tokens.size() - 1) == position;
+    }
+
     private Type getNextTokenType() {
         int nextIndex = position + 1;
 
