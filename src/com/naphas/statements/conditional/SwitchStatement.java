@@ -2,6 +2,7 @@ package com.naphas.statements.conditional;
 
 import com.naphas.Parser;
 import com.naphas.Type;
+import com.naphas.Utils;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.interfaces.Statement;
 
@@ -17,5 +18,9 @@ public class SwitchStatement implements Statement {
 
         SwitchBlockStatement switchBlockStatement = new SwitchBlockStatement();
         switchBlockStatement.execute();
+    }
+
+    public static boolean isEqualStartStatement() {
+        return Utils.isEqualStartStatement(Type.SWITCH);
     }
 }
