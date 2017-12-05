@@ -4,6 +4,7 @@ import com.naphas.Parser;
 import com.naphas.Type;
 import com.naphas.exceptions.SyntaxException;
 import com.naphas.statements.BlockStatement;
+import com.naphas.statements.DeclareStatement;
 import com.naphas.statements.algebra.equation.ArithmeticEquation;
 
 public class ForStatement extends LoopStatement {
@@ -27,6 +28,10 @@ public class ForStatement extends LoopStatement {
 
     private void initialization() throws SyntaxException {
         Parser parser = Parser.getInstance();
+
+        DeclareStatement declareStatement = new DeclareStatement();
+        declareStatement.execute();
+
         parser.match(Type.TERMINATOR);
     }
 
